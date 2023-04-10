@@ -1,92 +1,55 @@
+""" I imported some sample code from chatgpt that might be useful"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-# Constants
-m_e = 0.5109989461  # MeV/c^2, mass of electron
-E_in = 100  # MeV, incoming photon energy
-sigma_E = 0.01  # MeV, energy resolution of detector
+h = 6.62607015e-34  # Planck's constant (J s)
+c = 299792458  # speed of light (m/s)
+me = 9.10938356e-31  # mass of electron (kg)
+E_in = 0.6617  # energy of incoming photon (MeV)
+sigma_E = 0.01  # energy resolution of detector (MeV)
+psi = np.arange(10, 90, 10) * np.pi / 180  # scattering angles (radians)
 
 
-# Function to calculate true outgoing energy of photon given angle of scattering
-def E_true(theta):
-    return E_in/(1 + (E_in/m_e)*(1-np.cos(np.radians(theta))))
+# We define the Compton scattering formula as a function:
+def compton_scattering(E_in, me, c, h, psi):
+    return E_in / (1 + E_in / (me * c ** 2) * (1 - np.cos(psi)))
 
 
-# Simulate measurements with energy resolution
-theta = np.arange(10, 90, 10)
-E_true_vals = E_true(theta)
-E_meas_vals = np.random.normal(loc=E_true_vals, scale=sigma_E)
+# We use this function to calculate the expected outgoing energy of the photon for each scattering angle:
+E_true_out = compton_scattering(E_in, me, c, h, psi)
 
+# We then add a random energy resolution to each data point, using a normal distribution with mean 0 and standard
+# deviation sigma_E:
+E_reco_out = E_true_out + np.random.normal(0, sigma_E, size=len(psi))
 
-# Define likelihood function to fit
-def likelihood(theta, m_e):
-    E_meas = np.random.normal(loc=E_true(theta), scale=sigma_E)
-    return np.sum((E_meas - E_meas_vals)**2)
-
-
-# Perform maximum likelihood fit
-initial_guess = 0.5*m_e
-result = curve_fit(likelihood, theta, E_meas_vals, p0=initial_guess)
-m_reco_e, m_reco_e_err = result[0][0], np.sqrt(result[1][0][0])
-
-# Plot results
-plt.errorbar(theta, E_meas_vals, yerr=sigma_E, fmt='o', label='Measured')
-plt.plot(theta, E_true_vals, label='True')
-plt.plot(theta, E_true(theta), label='Fitted')
-plt.legend()
+# We can plot the data points to visualize the simulated experiment:
+plt.errorbar(psi * 180 / np.pi, E_reco_out, yerr=sigma_E, fmt='o', label='simulated data')
 plt.xlabel('Scattering angle (degrees)')
-plt.ylabel('Photon energy (MeV)')
-plt.title('Compton scattering simulation and fit')
-plt.show()
-
-# Print results
-print(f"Measured electron mass: {m_reco_e:.6f} +/- {m_reco_e_err:.6f} MeV/c^2")
-
-
-# Function to simulate a measurement given an angle of scattering and a true outgoing energy
-def simulate_measurement(theta, E_true):
-    E_reco = E_true + np.random.normal(loc=0, scale=sigma_E)
-    return E_reco
-
-
-# Simulate 1000 measurements for angles ranging from 10 to 80 degrees
-angles = np.arange(10, 90, 1)
-measurements = []
-for i in range(1000):
-    E_true_values = [E_true(theta) for theta in angles]
-    measurements.append([simulate_measurement(theta, E_true) for theta, E_true in zip(angles, E_true_values)])
-
-# Convert measurements to numpy array
-measurements = np.array(measurements)
-
-
-# Fit the measurements to obtain the measured electron mass
-def fit_func(theta, m):
-    return E_true(theta) * (1 + m*(1-np.cos(np.radians(theta)))/E_in)
-
-
-mean_values = np.mean(measurements, axis=0)
-popt, pcov = curve_fit(fit_func, angles, mean_values/E_in)
-
-m_reco = popt[0]
-m_reco_err = np.sqrt(np.diag(pcov))[0]
-print("Measured electron mass: {:.3f} +/- {:.3f} MeV/c^2".format(m_reco, m_reco_err))
-
-# Histogram of m_reco values
-plt.hist(measurements[:,0]/E_in, bins=20)
-plt.axvline(x=m_reco, color='red', label="Measured mass")
-plt.xlabel("Measured electron mass (MeV/c^2)")
-plt.ylabel("Frequency")
+plt.ylabel('Energy of outgoing photon (MeV)')
 plt.legend()
 plt.show()
 
-# Pull distribution
-pull = (measurements[:, 0]/E_in - m_reco) / m_reco_err
-plt.hist(pull, bins=20)
-plt.axvline(x=np.mean(pull), color='red', label="Mean = {:.3f}".format(np.mean(pull)))
-plt.axvline(x=np.std(pull), color='green', label="Standard deviation = {:.3f}".format(np.std(pull)))
-plt.xlabel("Pull")
-plt.ylabel("Frequency")
+
+# Now we can perform a maximum likelihood fit to determine the measured electron mass and its uncertainty. We define
+# a function to fit the data points using the curve_fit function from the scipy.optimize library:
+def fit_function(psi, m_reco_e):
+    return compton_scattering(E_in, m_reco_e, c, h, psi)
+
+
+popt, pcov = curve_fit(fit_function, psi, E_reco_out, sigma=sigma_E)
+m_reco_e = popt[0]
+sigma_m_reco_e = np.sqrt(pcov[0, 0])
+
+# Finally, we plot the result of the fit together with the simulated data points:
+plt.errorbar(psi * 180 / np.pi, E_reco_out, yerr=sigma_E, fmt='o', label='simulated data')
+plt.plot(psi * 180 / np.pi, fit_function(psi, m_reco_e),
+         label='fit: m_reco_e = {:.3e} +/- {:.3e} kg'.format(m_reco_e, sigma_m_reco_e))
+plt.xlabel('Scattering angle (degrees)')
+plt.ylabel('Energy of outgoing photon (MeV)')
 plt.legend()
 plt.show()
+
+# This should give you a plot with the simulated data points and the result of the fit. You can adjust the values of
+# sigma_E and E_in to explore different scenarios.
