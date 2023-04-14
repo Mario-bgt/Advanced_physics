@@ -41,9 +41,39 @@ plt.title("True energy vs simulated energy")
 plt.show()
 plt.clf()
 
-"""
-here comes part 3 b)
-"""
+
+# PART 3.B.
+from scipy.optimize import minimize
+from scipy import stats
+
+def E_out_model(theta, mc2):
+    E_in = 0.6617 #MeV
+    return E_in / (1+(((E_in)/(mc2))*(1 - np.cos(np.deg2rad(theta)))))
+
+theta_list = np.arange(10, 90, 10)
+E_out_true = E_out_model(theta_list, mc2=0.510998)
+
+def NLL(params):
+    mc2, std = params
+    E_out_predicted = E_out_model(theta_list, mc2)
+    NLL = -np.sum(stats.norm.logpdf(E_out_true, loc=E_out_predicted, scale=std))
+    return NLL
+
+MLE_model = minimize(NLL, x0 = np.array([0.4, 0.01]), method='Nelder-Mead')
+
+print(MLE_model, '\n')
+
+est_mc2 = MLE_model.x[0]
+est_sigma = MLE_model.x[1]
+print(f"Estimated parameter: mc^2 = {est_mc2:.6}, sigma = {est_sigma:.2}")
+E_out_fit = E_out_model(theta_list, est_mc2)
+
+plt.scatter(theta_list, E_out_true, label='data', color='r')
+plt.plot(theta_list, E_out_fit, label='fit', color='b')
+plt.xlabel(r"$\theta$", fontsize=15)
+plt.ylabel(r"$E_{out}$", fontsize=15)
+plt.legend()
+plt.show()
 
 
 # PART 4
