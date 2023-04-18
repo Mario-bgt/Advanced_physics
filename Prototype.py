@@ -6,14 +6,14 @@ from scipy import stats
 
 # PART 3
 # PART 3 a)
-def E_out_true(theta, E_in = 0.6617):  # we calculate the true energy output with known theta and energy
-    # the standart energy was gotten from 2.0 (Setup) and is given in MeV
+def E_out_true(theta, mc2):  # we calculate the true energy output with known theta and energy
+    # the standard energy was gotten from 2.0 (Setup) and is given in MeV, mass of elektron in MeV taken from wikipedia
     """
     :param theta: angle in degrees
     :param E_in: energy in MeV
     :return: E_out: energy in MeV
     """
-    mc2 = 0.510998  # mass of elektron in MeV taken from wikipedia
+    E_in = 0.6617  # we define the energy in MeV
     denominator = 1 + (E_in / mc2) * (1 - np.cos(np.deg2rad(theta)))  # we have to convert theta to radians
     E_out = E_in / denominator  # we calculate the output energy
     return E_out
@@ -22,7 +22,7 @@ def E_out_true(theta, E_in = 0.6617):  # we calculate the true energy output wit
 # create a list with angles from 10 to 90 degrees with a step of 10 degrees
 theta_lyst = np.arange(10, 90, 10)
 # Calculate the true energy for each angle in the list
-energy_lyst = [E_out_true(angle) for angle in theta_lyst]
+energy_lyst = [E_out_true(angle, mc2=0.510998) for angle in theta_lyst]
 # create a list with fluctuations in energy
 energy_fluctuation = [np.random.normal(0, 0.01) for i in range(8)]
 # add the fluctuations to the true energy
@@ -41,51 +41,61 @@ plt.ylabel("energy")
 plt.legend()
 plt.grid()
 plt.title("True energy vs simulated energy")
-plt.show()
+# plt.show()
+plt.savefig("True_energy_vs_simulated_energy.png")
 plt.clf()
 
-
 # PART 3 b)
-# we define a function which calculates the energy output with the guessed mc2 value
-def E_out_model(theta, mc2):
-    E_in = 0.6617  # MeV
+# PART 3.B.
+
+
+def E_out_model(theta, mc2,E_in=0.6617):
+    #E_in = 0.6617  # MeV
     return E_in / (1 + (((E_in) / (mc2)) * (1 - np.cos(np.deg2rad(theta)))))
 
 
-# theta_list = np.arange(10, 90, 10) we have a list above so I commented this one out
-E_out_true = E_out_model(theta_lyst, mc2=0.510998)
+theta_list = np.arange(10, 90, 10)
+E_out_true = E_out_model(theta_list, mc2=0.510998)
 
 
-# I have tried to optimize the NLL function for our 8 different mc2 values (before it was handled as if we had 1)
 def NLL(params):
-    mc2 = params[0:8]
-    std = params[8]
-    E_out_predicted = E_out_model(theta_lyst, mc2)
+    mc2, std,E_input= params
+    E_out_predicted = E_out_model(theta_list, mc2,E_input)
     NLL = -np.sum(stats.norm.logpdf(E_out_true, loc=E_out_predicted, scale=std))
     return NLL
 
 
-# This is a test energy list used on our MLE model instead of the initial guess for mc2 = 0.4 we have now 8 different
-# values
-test_energy_lyst = np.array([np.random.normal(0.5, 0.05) for i in range(8)])
-MLE_model = minimize(NLL, x0=np.concatenate((test_energy_lyst, np.array([0.01]))), method='Nelder-Mead')
-
-# MLE_model = minimize(NLL, x0=np.array([0.4, 0.01]), method='Nelder-Mead')
+MLE_model = minimize(NLL, x0=np.array([0.4, 0.01,0.66]), method='Nelder-Mead')
 
 print(MLE_model, '\n')
 
 est_mc2 = MLE_model.x[0]
 est_sigma = MLE_model.x[1]
 print(f"Estimated parameter: mc^2 = {est_mc2:.6}, sigma = {est_sigma:.2}")
-E_out_fit = E_out_model(theta_lyst, est_mc2)
+E_out_fit = E_out_model(theta_list, est_mc2)
 
-plt.scatter(theta_lyst, E_out_true, label='data', color='r')
-plt.plot(theta_lyst, E_out_fit, label='fit', color='b')
+plt.scatter(theta_list, E_out_true, label='data', color='r')
+plt.plot(theta_list, E_out_fit, label='fit', color='b')
 plt.xlabel(r"$\theta$", fontsize=15)
 plt.ylabel(r"$E_{out}$", fontsize=15)
 plt.legend()
-plt.show()
+# plt.show()
+plt.savefig("E_out_fit.png")
 plt.clf()
+
+
+def fit(theta_list, delta_E):
+    E_out_true = E_out_model(theta_list, mc2=0.510998)
+    MLE_model = minimize(NLL, x0=np.array([0.4, 0.01]), method='Nelder-Mead')
+    est_mc2 = MLE_model.x[0]
+    est_sigma = MLE_model.x[1]
+    return est_mc2, est_sigma
+
+
+delta_E = np.random.normal(0, 0.01, size=8)
+print(len(delta_E))
+est_mc2, est_sigma = fit(theta_list, delta_E)
+print(est_mc2, est_sigma)
 
 
 # here we define the pull with the formula pull = (mass_generated - all mass_generated_mean)/allmass_generated_std
@@ -95,22 +105,11 @@ def pull(rec_quant, gen_quant):
     :param gen_quant: generated quantity
     :return: pull
     """
-    return (rec_quant - gen_quant) / np.std(gen_quant)
+    nominator = [val - gen_quant for val in rec_quant]
+    return nominator / np.std(rec_quant)
 
 
 # PART 4
-def m_reco_e(E_out, theta, E_in=0.6617):
-    """
-    :param E_in: energy in MeV
-    :param E_out: energy out MeV
-    :param theta: angle in degrees
-    :return: mass of electron in MeV
-    """
-    nominator = E_in * E_out * (1 - np.cos(np.deg2rad(theta)))
-    denominator = (E_in - E_out)
-    return nominator / denominator
-
-
 # for later use we define a function for which we can tune our sigma
 def simulation(sigma=0.01):
     """
@@ -119,19 +118,15 @@ def simulation(sigma=0.01):
     """
     # PART 4 a)
     mass_lyst = []
-    for i in range(1000):
-        energy_fluctuation = [np.random.normal(0, sigma) for i in range(8)]
-        energy_simulated = np.add(energy_lyst, energy_fluctuation)
-        # we calculate the mass of the electron
-        for theta, energy in zip(theta_lyst, energy_simulated):
-            mass = m_reco_e(energy, theta)
-            mass_lyst.append(mass)
-
+    sigma_lyst = []
+    for i in range(100):
+        delta_E = np.random.normal(0, 0.01, size=8)
+        est_mc2, est_sigma = fit(theta_list, delta_E)
+        mass_lyst.append(est_mc2)
+        sigma_lyst.append(est_sigma)
 
     # PART 4 b)
     # histograms:
-    # reduce mass list to values between -0.5 and 1.5
-    mass_lyst = [mass for mass in mass_lyst if -0.5 < mass < 1.5]
     plt.hist(mass_lyst, bins=25)
     plt.xlabel("mass of electron")
     plt.ylabel("Number of occurences")
@@ -140,16 +135,18 @@ def simulation(sigma=0.01):
     plt.title("Histogram of simulated masses with sigma " + str(round(sigma, 3)) + " and mean " + str(round(mean, 3))
               + " and std " + str(round(deviation, 3)))
     plt.show()
+    plt.savefig("Histogram_of_simulated_masses_with_sigma " + str(round(sigma, 3)) + ".png")
     plt.clf()
     print(f"Mean of the simulated masses with sigma {sigma}: {mean:.2f}, std {deviation:.2f}")
 
     # PART 4 c) we make a list of the pull distribution and plot it
-    pull_dist = [pull(mass, mass_lyst) for mass in mass_lyst]
-    plt.hist(pull_dist, bins=25)
+    pull_dist = pull(mass_lyst, 0.510998)
+    plt.hist(pull_dist, bins=10)
     plt.xlabel("Pull distribution")
     plt.ylabel("Number of occurences")
     plt.title("Histogram of the pull distribution with sigma " + str(sigma))
-    plt.show()
+    # plt.show()
+    plt.savefig("Histogram_of_the_pull_distribution_with_sigma " + str(sigma) + ".png")
     plt.clf()
     pull_mean = np.mean(pull_dist)
     pull_std = np.std(pull_dist)
@@ -157,5 +154,6 @@ def simulation(sigma=0.01):
 
 
 # PART 4 d) (called a) in the sheet)
+simulation()
 simulation(0.05)
 simulation(0.1)
