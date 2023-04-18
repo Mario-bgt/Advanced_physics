@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.optimize import minimize, curve_fit
-from scipy.stats import norm, gaussian_kde
+from scipy.optimize import minimize
+from scipy.stats import norm
 
 # set a seed
 np.random.seed(42)
@@ -11,7 +11,7 @@ np.random.seed(42)
 theta_list = np.arange(10, 90, 10)
 
 # define a function that calculates the energy output with fluctuations
-def E_out_fluctuated(mc2, theta):
+def E_out_fluctuated(mc2, theta, a):
     """
     :param theta: angle in degrees
     :param mc2: mass of the electron in MeV
@@ -21,12 +21,12 @@ def E_out_fluctuated(mc2, theta):
     E_in = 0.6617
     denominator = 1 + (E_in / mc2) * (1 - np.cos(np.deg2rad(theta)))
     E_out = E_in / denominator
-    return E_out
+    return E_out + a
 
 
 # calculate the true energy for each angle in the list
 mc2_wiki = 0.510998
-energy_calculated = [E_out_fluctuated(mc2_wiki, angle) for angle in theta_list]
+energy_calculated = [E_out_fluctuated(mc2_wiki, angle, a=0) for angle in theta_list]
 
 # create a list with fluctuations in energy
 energy_fluctuation = np.random.normal(0, 0.01, size=len(theta_list))
@@ -42,7 +42,7 @@ plt.xlabel(r"$\theta$", fontsize=15)
 plt.ylabel(r"$E_{out}$", fontsize=15)
 plt.legend()
 plt.grid()
-plt.title("True energy vs simulated energy", fontsize=14, fontstyle='italic')
+plt.title("True energy vs simulated energy")
 # plt.show()
 plt.savefig("True_energy_vs_simulated_energy.png")
 plt.clf()
@@ -50,8 +50,8 @@ plt.clf()
 
 # define the negative log-likelihood function
 def neg_log_likelihood(params, energy_simulated, scale):
-    mc2 = params
-    energy_calculated = E_out_fluctuated(mc2, theta_list)
+    mc2, a = params
+    energy_calculated = E_out_fluctuated(mc2, theta_list, a)
     log_likelihood = np.sum(norm.logpdf(energy_simulated, loc=energy_calculated, scale=scale))
     return -log_likelihood
 
@@ -60,7 +60,7 @@ def neg_log_likelihood(params, energy_simulated, scale):
 scale = 0.01
 
 # perform the maximum likelihood fit
-result = minimize(neg_log_likelihood, x0=np.array([0.5]), args=(energy_simulated, scale))
+result = minimize(neg_log_likelihood, np.array([0.510998, 0]), args=(energy_simulated, scale))
 
 # retrieve the value of mc2
 mc2 = result.x[0]
@@ -73,12 +73,11 @@ print("The value of mc2 is:", mc2)
 # plot the negative log-likelihood function
 plt.figure()
 plt.scatter(theta_list, energy_calculated, label='data', color='r')
-plt.plot(theta_list, E_out_fluctuated(mc2, theta_list), label='fit', color='b')
+plt.plot(theta_list, E_out_fluctuated(mc2, theta_list, a=0), label='fit', color='b')
 plt.xlabel(r"$\theta$", fontsize=15)
 plt.ylabel(r"$E_{out}$", fontsize=15)
 plt.legend()
 plt.grid()
-plt.title("Negative log likelihood fit", fontsize=14, fontstyle='italic')
 # plt.show()
 plt.savefig("E_out_fit.png")
 plt.clf()
@@ -107,11 +106,11 @@ def simulate_likelihood(sigma):
         # create a list with fluctuations in energy
         energy_fluctuation = np.random.normal(0, sigma, size=len(theta_list))
         # calculate the true energy for each angle in the list
-        energy_calculated = [E_out_fluctuated(mc2_wiki, angle) for angle in theta_list]
+        energy_calculated = [E_out_fluctuated(mc2_wiki, angle, a=0) for angle in theta_list]
         # add the fluctuations to the true energy
         energy_simulated = np.add(energy_calculated, energy_fluctuation)
         # perform the maximum likelihood fit
-        result = minimize(neg_log_likelihood, np.array([0.5]), args=(energy_simulated, scale))
+        result = minimize(neg_log_likelihood, np.array([0.5, 0]), args=(energy_simulated, scale))
         # retrieve the value of mc2
         mc2 = result.x[0]
         # add the result to the list
@@ -123,14 +122,14 @@ def simulate_likelihood(sigma):
     print("The mean of the mc2 values is:", np.mean(mc2_list))
     print("The standard deviation of the mc2 values is:", np.std(mc2_list))
     # plot the results as a histograms
-    plt.figure(figsize=(8, 6))  # adjust the figure size if needed
-    plt.hist(mc2_list, bins=30, color='navy', alpha=0.8)  # set color and transparency
-    plt.axvline(np.mean(mc2_list), color='red', linestyle='--')  # add a line for the mean value
-    plt.xlabel("mc2", fontsize=12)  # adjust font size and style
-    plt.ylabel("frequency", fontsize=12)
-    plt.title("Histogram of mc2 values with sigma = " + str(sigma), fontsize=14, fontstyle='italic')
-    plt.grid(axis='y')  # only show gridlines on the y-axis
-    plt.savefig("Histogram_of_mc2_values_sigma_" + str(sigma) + ".png", dpi=300)  # increase dpi for higher quality
+    plt.figure()
+    plt.hist(mc2_list, bins=30)
+    plt.xlabel("mc2")
+    plt.ylabel("frequency")
+    plt.grid()
+    plt.title("Histogram of mc2 values with sigma = " + str(sigma))
+    # plt.show()
+    plt.savefig("Histogram_of_mc2_values_sigma_"+str(sigma)+".png")
     plt.clf()
 
     # calculate the pull
@@ -142,14 +141,13 @@ def simulate_likelihood(sigma):
     print("The standard deviation of the pull is:", np.std(pull_list))
     # plot the pull as a histogram
     plt.figure()
-    plt.hist(pull_list, bins=30, color='navy', alpha=0.8) # set color and transparency
-    plt.axvline(np.mean(pull_list), color='red', linestyle='--')  # add a line for the mean value
-    plt.xlabel("pull", fontsize=12)  # adjust font size and style
-    plt.ylabel("frequency", fontsize=12)
-    plt.grid(axis='y')
-    plt.title("Histogram of pull values with sigma = " + str(sigma), fontsize=14, fontstyle='italic')
+    plt.hist(pull_list, bins=30)
+    plt.xlabel("pull")
+    plt.ylabel("frequency")
+    plt.grid()
+    plt.title("Histogram of pull values with sigma = " + str(sigma))
     # plt.show()
-    plt.savefig("Histogram_of_pull_values_sigma"+str(sigma)+".png", dpi=300)
+    plt.savefig("Histogram_of_pull_values_sigma"+str(sigma)+".png")
     plt.clf()
 
 
