@@ -15,7 +15,6 @@ def E_out_fluctuated(mc2, theta):
     """
     :param theta: angle in degrees
     :param mc2: mass of the electron in MeV
-    :param a: fluctuations in energy
     :return: energy in MeV
     """
     E_in = 0.6617
@@ -124,7 +123,7 @@ def simulate_likelihood(sigma):
     print("The standard deviation of the mc2 values is:", np.std(mc2_list))
     # plot the results as a histograms
     plt.figure(figsize=(8, 6))  # adjust the figure size if needed
-    plt.hist(mc2_list, bins=30, color='navy', alpha=0.8)  # set color and transparency
+    plt.hist(mc2_list, bins=30, color='navy', alpha=0.8, density=True)  # set color and transparency
     plt.axvline(np.mean(mc2_list), color='red', linestyle='--')  # add a line for the mean value
     plt.xlabel("mc2", fontsize=12)  # adjust font size and style
     plt.ylabel("frequency", fontsize=12)
