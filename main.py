@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize, curve_fit
 from scipy.stats import norm, gaussian_kde
-
+#hello
 # set a seed
 np.random.seed(42)
 
