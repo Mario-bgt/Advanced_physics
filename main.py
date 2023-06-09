@@ -8,7 +8,8 @@ np.random.seed(42)
 
 # make a list of angles from 10 to 90 degrees with a step of 10 degrees
 # theta_list = np.arange(0, 370, 10) # try that one out and look at the plots and results!
-theta_list = np.arange(10, 90, 10)
+theta_list =  np.linspace(20, 150, 10)
+theta_list = np.round(theta_list, 0)
 
 # define a function that calculates the energy output with fluctuations
 def E_out_fluctuated(mc2, theta):
@@ -27,6 +28,11 @@ def E_out_fluctuated(mc2, theta):
 mc2_wiki = 0.510998
 energy_calculated = [E_out_fluctuated(mc2_wiki, angle) for angle in theta_list]
 
+# print the true energy
+for energy, i in zip(energy_calculated, range(len(energy_calculated))):
+    print("The true energy for angle", theta_list[i], "degrees is:", energy)
+
+
 # create a list with fluctuations in energy
 energy_fluctuation = np.random.normal(0, 0.01, size=len(theta_list))
 
@@ -43,7 +49,7 @@ plt.legend()
 plt.grid()
 plt.title("True energy vs simulated energy", fontsize=14, fontstyle='italic')
 # plt.show()
-plt.savefig("True_energy_vs_simulated_energy.png")
+plt.savefig("DA_II/True_energy_vs_simulated_energy.pdf")
 plt.clf()
 
 
@@ -79,7 +85,7 @@ plt.legend()
 plt.grid()
 plt.title("Negative log likelihood fit", fontsize=14, fontstyle='italic')
 # plt.show()
-plt.savefig("E_out_fit.png")
+plt.savefig("DA_II/E_out_fit.pdf")
 plt.clf()
 
 
@@ -129,7 +135,7 @@ def simulate_likelihood(sigma):
     plt.ylabel("frequency", fontsize=12)
     plt.title("Histogram of mc2 values with sigma = " + str(sigma), fontsize=14, fontstyle='italic')
     plt.grid(axis='y')  # only show gridlines on the y-axis
-    plt.savefig("Histogram_of_mc2_values_sigma_" + str(sigma) + ".png", dpi=300)  # increase dpi for higher quality
+    plt.savefig("DA_II/Histogram_of_mc2_values_sigma_" + str(sigma) + ".pdf", dpi=300)  # increase dpi for higher quality
     plt.clf()
 
     # calculate the pull
@@ -148,7 +154,7 @@ def simulate_likelihood(sigma):
     plt.grid(axis='y')
     plt.title("Histogram of pull values with sigma = " + str(sigma), fontsize=14, fontstyle='italic')
     # plt.show()
-    plt.savefig("Histogram_of_pull_values_sigma"+str(sigma)+".png", dpi=300)
+    plt.savefig("DA_II/Histogram_of_pull_values_sigma"+str(sigma)+".pdf", dpi=300)
     plt.clf()
 
 
