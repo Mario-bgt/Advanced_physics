@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 from functions import *
 
 
@@ -29,6 +31,7 @@ def evaluator(angle, expected_mean, expected_range):
     plt.ylabel('Counts')
     plt.legend()
     plt.grid()
+    plt.savefig('plots/gaussian_fit_0_angle_' + str(angle) + '.pdf')
     plt.show()
 
     # return the mean and standard deviation of the fitted curve

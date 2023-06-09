@@ -33,6 +33,7 @@ def evaluator(angle, expected_mean, expected_range):
     return mean, std
 
 
+
 files = np.linspace(-6, 4, 11)
 means = []
 stds = []
@@ -62,6 +63,8 @@ plt.savefig('plots/mean_vs_angle.pdf')
 plt.show()
 
 # print the fitted parameters
+print(means)
+print(stds)
 print('Mean: ', params[1])
 print('Standard deviation: ', params[2])
 
