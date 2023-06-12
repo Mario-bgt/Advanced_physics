@@ -63,3 +63,6 @@ plt.legend()
 plt.grid()
 plt.savefig('plots/mean_vs_energy_calibration.pdf')
 plt.show()
+
+# The function describing the calibration curve is:
+print('Calibration Curve: '+ str(params[0]) + 'x + ' + str(params[1]))
