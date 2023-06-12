@@ -5,12 +5,14 @@
 #                 Adaptation necessary !!!
 #
 # put your own locations here  !!!   for windows:  \ -> \\
-file_location = 'C:\\Users\\Institut\\Desktop\\Praktikum_Jan_2019\\LaNoMa\\'
+file_location = 'C:\\Users\\mario\\PycharmProjects\\ComptonSim\\lab_stern_gerlach\\data\\'
 #
 # put your filenames here. Must be a list, even for single file (ex. filenames = ['320.txt'])
-filenames = [ 'T118.5_B400.txt', 'T118,3_B510.txt']
+filenames = ['M320_T179_8.txt', 'M410_T180_5.txt', 'M465_T181_0.txt', 'M515_T181_5.txt', 'M575_T181_6.txt',
+             'M622_T181_6.txt', 'M680_T181_6.txt', 'M755_T181_6.txt', 'M820_T181_7.txt', 'M880_T181_7.txt',
+             'M920_T181_7.txt', 'M980_T181_8.txt']
 # your referenz mesurement without magnetic field ("zerofield")
-fileZeroField = 'T119,3_B0.txt'
+fileZeroField = 'M0_T179_0.txt'
 #
 #**************************************************************
 
@@ -19,7 +21,7 @@ fileZeroField = 'T119,3_B0.txt'
 widthMeas = 7.0
 
 # width  of fit (-widthFit to +widthFit in mm)
-widthFit = 7
+widthFit = 4.0
 
 # if  True: removes slope in background in defined fit range
 slope = False

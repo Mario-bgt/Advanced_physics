@@ -73,8 +73,8 @@ def doAll(file_location, filename, function_name, nFile):
     #show results and plot
     pl.figure(num=None, figsize=(6, 7), dpi=150)
     pl.plot(x, y, 'bo', label=' data')
-    pl.plot(x, fit,'r', label='fit')
-    pl.plot(x, initialGuess ,'g', label='initial guess')
+    pl.plot(x, fit, 'r', label='fit')
+    pl.plot(x, initialGuess,'g', label='initial guess')
     pl.legend()
     pl.xlabel('Distance [mm]')
     pl.ylabel('Voltage [V]')
@@ -88,7 +88,7 @@ def doAll(file_location, filename, function_name, nFile):
     print('chi2 ', chi2)
 
     #save graph
-    graph_name="%s-%s.png" % (function_name,filename[:-4])
+    graph_name="%s-%s.pdf" % (function_name,filename[:-4])
     output_name = os.path.join(file_location,graph_name)
     print("Saving figure to ", output_name)
     pl.savefig(output_name)
