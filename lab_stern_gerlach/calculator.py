@@ -5,6 +5,11 @@ from sympy import symbols, diff, sqrt, latex
 
 
 def calc_feld(x):
+    """
+    :param x: current in A
+    :return: magnetic field in T, absolute error in T
+    Function to calculate the magnetic field as well as the absolute error and the partial derivatives
+    """
     # Define the symbols
     const, a_1, a_2, a_3, I = symbols('const a_1 a_2 a_3, I')
 
@@ -53,6 +58,12 @@ def calc_feld(x):
 
 
 def calc_grad(x, x_err):
+    """
+    :param x: magnetic field in T
+    :param x_err: error of the magnetic field in T
+    :return: gradient in T/m, absolute error in T/m
+    Function to calculate the gradient as well as the absolute error and the partial derivatives of a magnetic field
+    """
     # Define the symbols
     epsilon, a, B = symbols('epsilon a B')
 
@@ -134,33 +145,46 @@ def fit_function(x, a, b):
     return a * x + b
 
 
+sigmas = []
+for i in range(len(grad_abs_err)):
+    sigmas.append((grad_abs_err[i]**2 + q_abs_err[i]**2)**.5)
+
+sigmas = np.array(sigmas, dtype='float64')
+print(sigmas)
+
 # Perform the fit
-popt, pcov = curve_fit(fit_function, q, grad)
+popt, pcov = curve_fit(fit_function, q, grad, sigma=sigmas, absolute_sigma=True)
 
 # Extract the slope and its error
 slope = popt[0]
 slope_err = np.sqrt(pcov[0, 0])
 
 # Generate fitted data points
-fit_q = np.linspace(min(q), max(q), 100)
-fit_grad = fit_function(fit_q, *popt)
+fit_q = np.linspace(min(q)-0.0005, max(q)+0.0005, 100)
+fit_grad = fit_function(fit_q, slope, popt[1])
+steepest = fit_function(fit_q, slope + slope_err, popt[1])
+shallowest = fit_function(fit_q, slope - slope_err, popt[1])
 
 # Plot the data and fit
 plt.figure(figsize=(10, 6))
 plt.errorbar(q, grad, xerr=q_abs_err, yerr=grad_abs_err, fmt='.', label='Data', capsize=3, elinewidth=1,
              markeredgewidth=1)
 plt.plot(fit_q, fit_grad, 'r-', label='Fit')
+plt.plot(fit_q, steepest, 'g--', label='Steilster', alpha=0.5)
+plt.plot(fit_q, shallowest, 'g--', label='Flachster', alpha=0.5)
 plt.xlabel('q [m]')
 plt.ylabel('Gradient [T/m]')
 plt.title('Gradient in Abhängigkeit von q')
 plt.legend()
 plt.grid(True)
+plt.savefig('gradient.pdf')
 plt.show()
 
 print("Fit results:")
 print("slope =", slope, "+-", slope_err)
 print("b =", popt[1], "+-", np.sqrt(pcov[1, 1]))
 
+# Calculate the mean temperature
 temperatures = np.array([179.8, 180.5, 181, 181.5, 181.6, 181.6, 181.6, 181.6, 181.7, 181.7, 181.7, 181.8])
 temperature_err_sys = 0.2
 temperatures = temperatures + 273.15
@@ -171,6 +195,7 @@ temperature_err = np.sqrt(temperature_err_stat ** 2 + temperature_err_sys ** 2)
 
 print("Mean temperature:", mean_temperature, "+-", temperature_err)
 
+# Finally calculate the Bohr magneton
 # Define the symbols
 small_l, big_l, boltzmann, temp, slop = symbols('l, L, k_B, T, m')
 
@@ -216,3 +241,9 @@ for var, abs_error in absolute_errors.items():
 
 print("\nTotal absolute error:", total_absolute_error)
 print("Relative error:", relative_error)
+
+# Print Latex table of the results for feld and grad
+print("\nLatex table:")
+print("Strom & Feld & Feld Abs. Error & Gradient & Gradient Abs. Error  \\\\")
+for i in range(len(strom)):
+    print(f"{strom[i]:.3f} & {feld[i]:.3f} & {feld_abs_err[i]:.4f} & {grad[i]:.3f} & {grad_abs_err[i]:.4f} \\\\")
