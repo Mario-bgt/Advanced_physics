@@ -1,10 +1,8 @@
-import matplotlib.pyplot as plt
-
 from functions import *
 import os
-from scipy.optimize import leastsq
+from scipy.optimize import curve_fit
+from tabulate import tabulate
 
-c = 299792458  # speed of light in m/s
 
 def E_out_expected(theta, E_in=674.942):
     """
@@ -22,18 +20,6 @@ angels = [20, 34, 49, 63, 78, 92, 107, 121, 136]
 
 E_out_expected_list = [E_out_expected(angel) for angel in angels]
 print(E_out_expected_list)
-
-
-files = os.listdir('data')
-files = [file for file in files if file.startswith('dw_ang')]
-
-# sort the files by the angle
-files = sorted(files, key=lambda x: int(x[6:8]))
-print(files)
-
-for file in files:
-    counts = read_spe_file('data/' + file)
-    x = marker_to_keV(np.arange(len(counts)))
 
 
 def find_out_energy(file, expected_mean, expected_range=100):
@@ -72,9 +58,9 @@ def find_out_energy(file, expected_mean, expected_range=100):
     return mean, std
 
 
-files = ['dw_ang20_rt900.14.Spe', 'dw_ang34_rt900.06.Spe', 'dw_ang49_rt900.14.Spe', 'dw_ang63_rt300.18_pt2.Spe',
-         'dw_ang78_rt300.06_pt2.Spe', 'dw_ang92_rt300.1_pt2.Spe', 'dw_ang107_rt900.32.Spe',
-         'dw_ang121_rt722.36.Spe', 'dw_ang136_rt300.82.Spe', ]
+files = ['dw_ang20_rt900.14.Spe', 'dw_ang34_rt900.06.Spe', 'dw_ang49_rt900.14.Spe', 'dw_ang63_rt300.18.Spe',
+         'dw_ang78_rt300.06.Spe', 'dw_ang92_rt300.10.Spe', 'dw_ang107_rt900.32.Spe',
+         'dw_ang121_rt722.36.Spe', 'dw_ang136_rt300.82.Spe' ]
 
 
 # get the mean count and std for each file
@@ -85,14 +71,26 @@ for i, file in enumerate(files):
     means.append(mean)
     stds.append(std)
 
+
+# fit the data to the E_out function
+popt, pcov = curve_fit(E_out_expected, angels, means, sigma=stds, absolute_sigma=True)
+
+
 # plot the mean and std
 plt.errorbar(angels, means, xerr=2.62, yerr=stds, fmt='b.', label='measured', capsize=3, elinewidth=1,
              markeredgewidth=1)
 plt.plot(angels, E_out_expected_list, 'g--', label='expected')
+plt.plot(angels, E_out_expected(angels, *popt), 'r-', label='fit', alpha = 0.5)
 plt.title('Measured and Expected Energy vs Angle')
 plt.xlabel('Angle [degrees]')
 plt.ylabel('Energy [keV]')
 plt.grid()
 plt.legend()
-plt.savefig('plots/energy_vs_angle_v2.pdf')
+plt.savefig('plots/energy_vs_angle.pdf')
 plt.show()
+
+# make a table of the data
+table = np.array([angels, means, stds, E_out_expected_list]).T
+print(table)
+# Print it for latex
+print(tabulate(table, tablefmt="latex_raw", floatfmt=".2f"))
