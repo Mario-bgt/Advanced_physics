@@ -33,7 +33,6 @@ def evaluator(angle, expected_mean, expected_range):
     return mean, std
 
 
-
 files = np.linspace(-6, 4, 11)
 means = []
 stds = []
@@ -50,9 +49,13 @@ params = fit_gaussian(files, means)
 # Generate points for the fitted curve
 x_fit = np.linspace(files[0], files[-1], 1000)
 y_fit = gaussian(x_fit, *params)
+p0 = [np.max(means), np.mean(files), np.std(files)]
+y_initial_guess = gaussian(x_fit, *p0)
 
 # Plot the data and the fitted curve
-plt.plot(files, means, 'b.', label='data')
+plt.errorbar(files, means, yerr=stds, fmt='b.', label='measured', capsize=3, elinewidth=1,
+             markeredgewidth=1)
+plt.plot(x_fit, y_initial_guess, 'g--', label='initial guess')
 plt.plot(x_fit, y_fit, 'r-', label='fit')
 plt.title('Counts vs Angle')
 plt.xlabel('Angle (degrees)')
