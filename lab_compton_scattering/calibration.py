@@ -15,7 +15,7 @@ def evaluator(filename, expected_mean, expected_range):
     # restrict the data to the said points
     counts = counts[lower_lim:upper_lim]
     x = x[lower_lim:upper_lim]
-    std = np.sqrt(counts)
+    std = np.std(counts)
     # Fit Gaussian curve to the data
     params = fit_gaussian(x, counts)
 
@@ -52,9 +52,12 @@ params = fit_linear([e_peak[0], NA_peak[0], Cs_peak[0]], [511, 1274, 662])
 # Generate points for the fitted curve
 x_fit = np.linspace(0, 4500, 1000)
 y_fit = linear(x_fit, *params)
-
+print(e_peak[2])
 # Plot the data and the fitted curve
-plt.plot([e_peak[0], NA_peak[0], Cs_peak[0]], [511, 1274, 662], 'bx', label='data')
+plt.errorbar([e_peak[0], NA_peak[0], Cs_peak[0]], [511, 1274, 662], xerr=[e_peak[2], NA_peak[2], Cs_peak[2]],
+             yerr=[e_peak[1], NA_peak[1], Cs_peak[1]],
+             fmt='b.', label='measured', capsize=3, elinewidth=1,
+             markeredgewidth=1)
 plt.plot(x_fit, y_fit, 'r-', label='fit', alpha=0.5)
 plt.title('Mean vs Energy')
 plt.xlabel('channel')
