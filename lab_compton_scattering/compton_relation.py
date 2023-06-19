@@ -58,9 +58,9 @@ def find_out_energy(file, expected_mean, expected_range=100):
     return mean, std
 
 
-files = ['dw_ang20_rt900.14.Spe', 'dw_ang34_rt900.06.Spe', 'dw_ang49_rt900.14.Spe', 'dw_ang63_rt300.18.Spe',
-         'dw_ang78_rt300.06.Spe', 'dw_ang92_rt300.10.Spe', 'dw_ang107_rt900.32.Spe',
-         'dw_ang121_rt722.36.Spe', 'dw_ang136_rt300.82.Spe' ]
+files = ['dw_ang20_rt900.14.Spe', 'dw_ang34_rt900.06.Spe', 'dw_ang49_rt900.14.Spe',
+          'dw_ang63_rt300.18.Spe', 'dw_ang78_rt300.06.Spe', 'dw_ang92_rt300.10.Spe',
+          'dw_ang107_rt900.32.Spe', 'dw_ang121_rt722.36.Spe', 'dw_ang136_rt300.82.Spe']
 
 
 # get the mean count and std for each file

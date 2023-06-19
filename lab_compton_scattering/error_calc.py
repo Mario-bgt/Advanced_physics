@@ -154,3 +154,4 @@ for var, derivative in partial_derivatives.items():
 
 print("\nTotal absolute error:", total_absolute_error)
 print("Value of sigma_2:", sigma_2.subs(variables))
+
