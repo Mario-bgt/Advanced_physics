@@ -84,3 +84,11 @@ half_thickness_err = -1*np.log(0.5)*b_err/100
 
 print('half thickness = ' + str(half_thickness))
 print('half thickness error = ' + str(half_thickness_err))
+
+# calculate the mean counts for 0.3 cm
+mean_03 = exponential(0.3, *params)
+print('mean counts for 0.3 cm = ' + str(mean_03))
+
+# calcuate  its error
+mean_03_err = np.sqrt((np.exp(-1*b*0.3)*b_err)**2 + (np.exp(-1*b*0.3)*b*0.05)**2)
+print('mean counts for 0.3 cm error = ' + str(mean_03_err))
