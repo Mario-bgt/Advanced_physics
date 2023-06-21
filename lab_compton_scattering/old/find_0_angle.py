@@ -19,21 +19,27 @@ def evaluator(angle, expected_mean, expected_range):
     # Fit Gaussian curve to the data
     params = fit_gaussian(x, counts)
 
-    # return the mean and standard deviation of the fitted curve
-    interval_mid = params[1]
-    interval_width = params[2]
-    interval = np.where((x > interval_mid - interval_width) & (x < interval_mid + interval_width))
-    lower_lim = interval[0][0]
-    upper_lim = interval[0][-1]
+    # Generate points for the fitted curve
+    x_fit = np.linspace(x[0], x[-1], 1000)
+    y_fit = gaussian(x_fit, *params)
 
-    # find the mean of the counts in the interval
-    mean = np.mean(counts[lower_lim:upper_lim])
-    std = np.std(counts[lower_lim:upper_lim])
-    # return the mean and std of the counts
-    return mean, std
+    # Plot the data and the fitted curve
+    plt.plot(x, counts, 'b.', label='data')
+    plt.plot(x_fit, y_fit, 'r-', label='fit')
+    plt.title('Angle: ' + str(angle) + ' degrees')
+    plt.xlabel('Energy (keV)')
+    plt.ylabel('Counts')
+    plt.legend()
+    plt.grid()
+    plt.savefig('plots/gaussian_fit_0_angle_' + str(angle) + '.pdf')
+    plt.show()
+
+    # return the mean and standard deviation of the fitted curve
+    return params[1], params[2]
 
 
 files = np.linspace(-6, 4, 11)
+
 means = []
 stds = []
 
@@ -49,25 +55,20 @@ params = fit_gaussian(files, means)
 # Generate points for the fitted curve
 x_fit = np.linspace(files[0], files[-1], 1000)
 y_fit = gaussian(x_fit, *params)
-p0 = [np.max(means), np.mean(files), np.std(files)]
-y_initial_guess = gaussian(x_fit, *p0)
 
 # Plot the data and the fitted curve
-plt.errorbar(files, means, yerr=stds, fmt='b.', label='measured', capsize=3, elinewidth=1,
-             markeredgewidth=1)
-plt.plot(x_fit, y_initial_guess, 'g--', label='initial guess')
+plt.plot(files, means, 'b.', label='data')
 plt.plot(x_fit, y_fit, 'r-', label='fit')
-plt.title('Counts vs Angle')
+plt.title('Mean vs Angle')
 plt.xlabel('Angle (degrees)')
-plt.ylabel('Mean Counts')
+plt.ylabel('Mean (keV)')
 plt.legend()
 plt.grid()
-plt.savefig('plots/mean_vs_angle.pdf')
 plt.show()
 
 # print the fitted parameters
-print(means)
-print(stds)
 print('Mean: ', params[1])
 print('Standard deviation: ', params[2])
+
+
 
