@@ -46,6 +46,9 @@ for file in files:
 # fit the means
 params = fit_gaussian(files, means)
 
+
+
+
 # Generate points for the fitted curve
 x_fit = np.linspace(files[0], files[-1], 1000)
 y_fit = gaussian(x_fit, *params)
