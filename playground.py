@@ -1,10 +1,14 @@
-a = [1,2,3]
-b = [1,2,3]
-c = b
-if a == c:
-    j = b is c
-else:
-    j = b == c
-x =j
+#!/usr/bin/env python3
+from math import*
 
-print(x, type(x))
+def zoo(number):
+    # return a tuple containing the required values
+    upper = ceil(number)
+    lower = floor(number)
+    arctan = atan(number)
+    frac_int = modf(number)
+    minus_inf = nextafter(number, -inf)
+    cube = cbrt(number)
+    return (lower, upper, arctan, frac_int, minus_inf, cube)
+
+print(zoo(5.7))
