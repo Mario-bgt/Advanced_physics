@@ -25,6 +25,25 @@ def exponential(x, A, tau):
     return A * np.exp(-x / tau)
 
 
+def linear(x, m, b):
+    """
+    :param x: x array
+    :param m: slope
+    :param b: y-intercept
+    :return: m*x + b
+    """
+    return m * x + b
+
+
+def fit_linear(x, y):
+    """
+    :param x: x array
+    :param y: y array
+    :return: fit parameters
+    """
+    params, _ = curve_fit(linear, x, y)
+    return params
+
 # Define the function to fit the Gaussian curve to the data
 def fit_gaussian(x, y):
     """
@@ -61,4 +80,4 @@ def fit_exponential(x, y):
 
 
 def channel_to_time(channel):
-    return 3.06159197e-03 * channel*10e-9
+    return channel * (3.06095841*10**(-12))

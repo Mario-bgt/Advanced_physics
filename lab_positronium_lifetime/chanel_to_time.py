@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-
 from functions import *
 
 data = read_spe_file('data/timeconverter_0_4_8_12_16_20.Spe')
@@ -31,12 +29,17 @@ for i in peaks:
 
 plt.clf()
 
-time = [0, 4, 8, 12, 16, 20]
-# linear fit all the means
-params = np.polyfit(peaks, time, 1)
-print(params)
-plt.plot(peaks, time, 'o', label='Data')
-plt.plot(peaks, np.polyval(params, peaks), label='Linear fit')
+
+def linear(x, m, c):
+    return m*x + c
+
+
+time = [0, 4*10**-9, 8*10**-9, 12*10**-9, 16*10**-9, 20*10**-9]
+mean = np.array(mean)
+popt = fit_linear(mean, time)
+print(popt)
+plt.plot(mean, time, 'o', label='Data')
+plt.plot(mean, linear(mean, popt[0], popt[1]), label='Linear fit')
 plt.xlabel('Channel')
 plt.ylabel('Time [ns]')
 plt.title('Linear fit of channel vs time')

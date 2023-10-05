@@ -6,27 +6,29 @@ data = read_spe_file('data/me3_deltatime.Spe')
 
 x_vals = np.arange(0, len(data), 1)
 y_vals = np.array(data)
-x_data = x_vals[8000:12000]
-y_data = y_vals[8000:12000]
-# transform x_data to time
-x_data = channel_to_time(x_data)
+x_data = channel_to_time(x_vals)
+y_data = y_vals[8500:11000]
+x_data = x_data[8500:11000]
+
 
 # Define the model function as a sum of Gaussian and two exponential decay components
 def model_function(x, a, mu, sigma, amp1, decay1, amp2, decay2):
     # Gaussian component
-    gaussi = a * np.exp(-(x - mu)**2 / (2 * sigma**2))
+    gaussi = a * np.exp(-(x - mu)**2 / (2 * sigma**2)) * 1 / (sigma * np.sqrt(2 * np.pi))
 
     # Two exponential decay components
     exp1 = amp1 * np.exp(-x / decay1)
     exp2 = amp2 * np.exp(-x / decay2)
 
     # Calulate the convolved model
-    conv1 = np.convolve(gaussi, exp1, mode='same')
-    return np.convolve(conv1, exp2, mode='same')
+    g_fft = np.fft.fft(gaussi)
+    exp1_fft = np.fft.fft(exp1)
+    res = np.fft.ifft(g_fft * exp1_fft)
+    return res
 
 
 # Initial guesses for the parameters
-initial_guess = [200, 9000, 100, np.max(y_data)/2, (125*10**-12)*3.06159197e-03, np.max(y_data)/2, 142*10**-9]
+initial_guess = [250, 2.8*10**(-8), 10**(-9), 50, (125*10**-12), 150, (142*10**-9)]
 
 # plot the inital guess
 plt.plot(x_data, model_function(x_data, *initial_guess), 'r-', label='Initial Guess')
