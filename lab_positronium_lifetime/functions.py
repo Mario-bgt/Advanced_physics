@@ -58,3 +58,7 @@ def fit_exponential(x, y):
     p0 = [np.max(y), 1]  # Initial guess for parameters
     params, _ = curve_fit(exponential, x, y, p0=p0)
     return params
+
+
+def channel_to_time(channel):
+    return 3.06159197e-03 * channel*10e-9
