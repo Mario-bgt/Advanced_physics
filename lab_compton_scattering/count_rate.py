@@ -173,7 +173,7 @@ def counts_per_seconds(file, background, expected_energy, figure=False):
     count_std = np.std(count_lyst)
     background_mean = np.sum(background_lyst)
     background_std = np.std(background_lyst)
-    # count_mean = count_mean - background_mean
+    count_mean = abs(count_mean - background_mean)
     count_std = np.sqrt(count_std ** 2 + background_std ** 2)
     # Gaussian fit:
     x = np.arange(len(count_lyst))
@@ -301,7 +301,7 @@ def calc_diffcross(R_sc,  R_sc_err):
     print(f"Latex of function: {latex_func}")
 
     # Define the variables and their errors
-    variables = {R_scatter: R_sc, v: 1.56*10**(-5), Z: 13, N_A: 6.022*10**(23), sigma_D: 3.8325*10**(-3), R_0: count_mean_zero, d_t: 0.3*10**(-2)}
+    variables = {R_scatter: R_sc, v: 1.56*10**(-5), Z: 13, N_A: 6.022*10**(23), sigma_D: 5*10**(-3), R_0: count_mean_zero, d_t: 0.3*10**(-2)}
     errors = {R_scatter: R_sc_err, v: 0.522*10**(-5), Z: 0, N_A: 0, sigma_D: 0.4489*10**(-3), R_0: count_std_zero, d_t: 10**(-4)}
 
     # Calculate the partial derivatives

@@ -53,7 +53,7 @@ p0 = [np.max(means), np.mean(files), np.std(files)]
 y_initial_guess = gaussian(x_fit, *p0)
 
 # Plot the data and the fitted curve
-plt.errorbar(files, means, yerr=stds, fmt='b.', label='measured', capsize=3, elinewidth=1,
+plt.errorbar(files, means,xerr=0.5, yerr=stds, fmt='b.', label='measured', capsize=3, elinewidth=1,
              markeredgewidth=1)
 plt.plot(x_fit, y_initial_guess, 'g--', label='initial guess')
 plt.plot(x_fit, y_fit, 'r-', label='fit')
@@ -66,6 +66,7 @@ plt.savefig('plots/mean_vs_angle.pdf')
 plt.show()
 
 # print the fitted parameters
+print('Initial guess params: ', p0)
 print(means)
 print(stds)
 print('Mean: ', params[1])

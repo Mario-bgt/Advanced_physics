@@ -1,15 +1,8 @@
-import pyautogui as pt
-import time
+j = 0
 
-limit = 100
-message = "Eh mafi wenn goemmer?"
-i = 0
-time.sleep(5)
+def fun(n):
+    j = n
 
-while i < limit:
-    pt.typewrite(message)
-    # the message is written where -
-    # the cursor belongs
-    time.sleep(0.05)
-    pt.press("enter")
-    i+=1
+fun(3)
+i = j
+print(i, type(i))
