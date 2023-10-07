@@ -24,22 +24,21 @@ def gauss_expo_convolution(data, mu, sigma, tau):
 
 # Define the model function as a sum of Gaussian and two exponential decay components
 def model_function(data, mu, sigma, decay1, decay2, a1, a2, a3):
-    gauss = abs(a3)*np.exp(-1*((data-mu)**2)/(2*sigma**2))
-    exp1 = a1/(2*decay1)*gauss_expo_convolution(data, mu, sigma, decay1)
-    exp2 = a2/(2*decay2)*gauss_expo_convolution(data, mu, sigma, decay2)
-    res = gauss + exp1 + exp2
+    exp1 = ((a1*a3)/2)*gauss_expo_convolution(data, mu, sigma, decay1)
+    exp2 = ((a2*a3)/2)*gauss_expo_convolution(data, mu, sigma, decay2)
+    res = exp1 + exp2
     return res
 
 
 # Initial guesses for the parameters
-initial_guess = [2.72e-08, 1.8e-10, 2e-09, 1e-10, 1e-7, 0.5e-7, 200]
+initial_guess = [2.72e-08, 1.8e-10, 2e-09, 1e-10, 2,2, 200]
 # initial_guess = [180, 180, 180, 2.7*10**(-8), 1e-11, 1.25*10**(-10), 1.42*10**(-7)]
 # plot the inital guess
 plt.plot(x_data[8500:11000], y_data[8500:11000], label='Data with Noise')
 plt.plot(x_data[0:11000], model_function(x_data, *initial_guess)[0:11000], 'r--', label='Initial Guess')
 plt.plot(x_data[0:11000], initial_guess[6]*np.exp(-1 * ((x_data[0:11000] - initial_guess[0])**2) / (2 * initial_guess[1]**2)), 'g--', label='Gaussian')
-plt.plot(x_data[0:11000], initial_guess[4]/(2*initial_guess[2])*gauss_expo_convolution(x_data[0:11000], initial_guess[0], initial_guess[1], initial_guess[2]), 'y--', label='Exponential 1')
-plt.plot(x_data[0:11000], initial_guess[5]/(2*initial_guess[3])*gauss_expo_convolution(x_data[0:11000], initial_guess[0], initial_guess[1], initial_guess[3]), 'b--', label='Exponential 2')
+plt.plot(x_data[0:11000], 0.5*(initial_guess[4]*initial_guess[6])*gauss_expo_convolution(x_data[0:11000], initial_guess[0], initial_guess[1], initial_guess[2]), 'y--', label='Exponential 1')
+plt.plot(x_data[0:11000], 0.5*(initial_guess[5]*initial_guess[6])*gauss_expo_convolution(x_data[0:11000], initial_guess[0], initial_guess[1], initial_guess[3]), 'b--', label='Exponential 2')
 plt.legend()
 plt.xlabel('Channel')
 plt.ylabel('Counts')
@@ -69,8 +68,8 @@ plt.scatter(x_data[8500:11000], y_data[8500:11000], label='Data')
 plt.plot(x_data[8500:11000], model_function(x_data, *params)[8500:11000], 'r-', label='Fitted Curve')
 # Plot individual components (Gaussian and two exponential decays)
 plt.plot(x_data[8500:11000], a3_fit*np.exp(-1 * ((x_data[8500:11000] - mu_fit)**2) / (2 * sigma_fit**2)), 'g--', label='Gaussian')
-plt.plot(x_data[8500:11000], a1_fit/(2*decay1_fit)*gauss_expo_convolution(x_data[8500:11000], mu_fit,sigma_fit,decay1_fit), 'y--', label='Exponential 1')
-plt.plot(x_data[8500:11000], a2_fit/(2*decay2_fit)*gauss_expo_convolution(x_data[8500:11000], mu_fit,sigma_fit,decay2_fit), 'b--', label='Exponential 2')
+plt.plot(x_data[8500:11000], 0.5*(a1_fit*a3_fit)*gauss_expo_convolution(x_data[8500:11000], mu_fit,sigma_fit,decay1_fit), 'y--', label='Exponential 1')
+plt.plot(x_data[8500:11000], 0.5*(a2_fit*a3_fit)*gauss_expo_convolution(x_data[8500:11000], mu_fit,sigma_fit,decay2_fit), 'b--', label='Exponential 2')
 plt.legend()
 plt.xlabel('time [s]')
 plt.ylabel('Counts')

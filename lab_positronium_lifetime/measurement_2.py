@@ -7,8 +7,9 @@ data = [x+y for x, y in zip(data1, data2)]
 
 x_vals = np.arange(0, len(data), 1)
 y_vals = np.array(data)
+x_vals = channel_to_time(x_vals)
 
-params = fit_gaussian(x_vals, y_vals)
+params, _ = fit_gaussian(x_vals, y_vals)
 print(params)
 # limit data to the range of the fit
 upper = 10000
@@ -23,7 +24,7 @@ plt.plot(x_vals, gaussian(x_vals, *params), label='Gaussian fit')
 plt.axvline(params[1], color='r', label='Mean')
 plt.axvline(params[1] + params[2], color='g', label='Mean + std')
 plt.grid()
-plt.xlabel('Channel')
+plt.xlabel('time (s)')
 plt.ylabel('Counts')
 plt.title('Gaussian fit of measurement 2')
 plt.legend()

@@ -42,7 +42,7 @@ def fit_linear(x, y):
     :return: fit parameters
     """
     params, _ = curve_fit(linear, x, y)
-    return params
+    return params, _
 
 # Define the function to fit the Gaussian curve to the data
 def fit_gaussian(x, y):
@@ -53,7 +53,7 @@ def fit_gaussian(x, y):
     """
     p0 = [np.max(y), np.mean(x), np.std(x)]  # Initial guess for parameters
     params, _ = curve_fit(gaussian, x, y, p0=p0)
-    return params
+    return params, _
 
 def read_spe_file(file_path):
     """
@@ -68,6 +68,7 @@ def read_spe_file(file_path):
                 break
     return counts
 
+
 def fit_exponential(x, y):
     """
     :param x: x array
@@ -80,4 +81,16 @@ def fit_exponential(x, y):
 
 
 def channel_to_time(channel):
+    """
+    :param channel: input channel
+    :return: channel translated to time
+    """
     return channel * (3.06095841*10**(-12))
+
+
+def time_to_channel(time):
+    """
+    :param time: input time
+    :return: time translated to channel
+    """
+    return time / (3.06095841*10**(-12))
