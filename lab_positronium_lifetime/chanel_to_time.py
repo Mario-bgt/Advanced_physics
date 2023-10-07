@@ -8,6 +8,18 @@ y_vals = np.array(data)
 peaks = [8890, 10175, 11508, 12800, 14120, 15410]
 mean = []
 sigma = []
+time = [0, 4*10**-9, 8*10**-9, 12*10**-9, 16*10**-9, 20*10**-9]
+
+plt.plot(x_vals, y_vals, label='Data')
+plt.grid()
+plt.xlabel('Channel')
+plt.ylabel('Counts')
+plt.title('Raw data for the time calibration')
+plt.legend()
+# plt.xticks(peaks, time)
+plt.show()
+
+
 
 for i in peaks:
     x_data = x_vals[i-100:i+100]
@@ -38,16 +50,12 @@ time = [0, 4*10**-9, 8*10**-9, 12*10**-9, 16*10**-9, 20*10**-9]
 mean = np.array(mean)
 popt = fit_linear(mean, time)
 print(popt)
-plt.plot(mean, time, 'o', label='Data')
-plt.plot(mean, linear(mean, popt[0], popt[1]), label='Linear fit')
+plt.plot(mean, time, 'x', label='Data', color='black')
+# plt.errorbar(mean, time, xerr=sigma, fmt='x', label='Error')
+plt.plot(mean, linear(mean, popt[0], popt[1]), label='Linear fit', color='red', linestyle='--')
 plt.xlabel('Channel')
 plt.ylabel('Time [ns]')
 plt.title('Linear fit of channel vs time')
 plt.legend()
 plt.grid()
 plt.show()
-
-
-
-
-
