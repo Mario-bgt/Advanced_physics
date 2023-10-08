@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 from functions import *
 
 data = read_spe_file('data/total_spec.Spe')
@@ -35,4 +37,5 @@ plt.xlabel('Channel, proportional to energy')
 plt.ylabel('Counts')
 plt.title('Total spectrum')
 plt.legend()
+plt.savefig('plots/total_spectrum.pdf')
 plt.show()

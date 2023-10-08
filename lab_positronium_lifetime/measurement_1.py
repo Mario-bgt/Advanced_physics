@@ -43,7 +43,7 @@ plt.xlabel('Time (s)')
 plt.ylabel('Residuals')
 plt.title('Residuals of the Gaussian fit of measurement 1')
 plt.legend()
-# plt.savefig('plots/gaussian_fit_residuals_m1.pdf')
+plt.savefig('plots/gaussian_fit_residuals_m1.pdf')
 plt.show()
 err_mean = cov[1][1]
 err_std = cov[2][2]
