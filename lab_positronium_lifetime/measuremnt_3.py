@@ -74,3 +74,5 @@ plt.title('Fitting Data with Gaussian Detector and Two Exponential Decays')
 plt.grid()
 plt.savefig('plots/m3_fitting_data.pdf')
 plt.show()
+
+

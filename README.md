@@ -1,6 +1,53 @@
-# ComptonSim
-ComptonSim is a Github project aimed at simulating Compton scattering, a phenomenon that occurs when photons interact with charged particles, such as electrons. This project will provide a platform to simulate the behavior of photons as they scatter off of electrons, allowing users to study and visualize the interaction of light with matter.
+# Data Analysis in Python
 
-ComptonSim will use the Monte Carlo method, a popular technique for simulating complex physical systems, to accurately model the behavior of photons and electrons during scattering. The project will be developed using Python, and will include modules for visualizing the simulation results.
+Welcome to the Data Analysis in Python repository! This project aims to provide a comprehensive toolkit for performing various data analysis tasks using Python. Currently, the repository covers the analysis of Positronium lifetime, Compton scattering, and Stern-Gerlach experiments. Additionally, we plan to implement Laue crystal scattering analysis to further expand the capabilities of this toolkit.
 
-With ComptonSim, users can explore the fundamental principles of Compton scattering, including the relationship between the wavelength of the incident photon, the scattering angle, and the energy of the scattered photon. This project will be useful for students and researchers in physics, as well as anyone interested in learning more about the behavior of light and matter.
+## Table of Contents
+- [Background](#background)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Positronium Lifetime Analysis](#positronium-lifetime-analysis)
+- [Compton Scattering Analysis](#compton-scattering-analysis)
+- [Stern-Gerlach Analysis](#stern-gerlach-analysis)
+- [Laue Crystal Scattering (In Progress)](#laue-crystal-scattering-in-progress)
+- [Contributing](#contributing)
+-[License](#License)
+
+## Background
+Data analysis is a crucial component of scientific research, allowing us to extract meaningful insights from experimental data. This repository is designed to simplify and streamline the process of analyzing data from various experimental setups, including Positronium lifetime measurements, Compton scattering experiments, Stern-Gerlach apparatus, and upcoming Laue crystal scattering analysis.
+
+## Features
+- **Positronium Lifetime Analysis**: Analyze experimental data to determine the lifetime of positronium, an exotic atom composed of an electron and a positron.
+
+- **Compton Scattering Analysis**: Perform Compton scattering analysis to investigate the phenomenon of X-ray scattering from electrons and gain insights into the energy-momentum relationship of photons.
+
+- **Stern-Gerlach Analysis**: Study the quantum mechanical Stern-Gerlach experiment, which demonstrates the quantization of angular momentum and the quantization of spin angular momentum.
+
+- **Laue Crystal Scattering (In Progress)**: Work in progress! This feature will enable the analysis of Laue crystal scattering experiments, which provide valuable information about crystal structures.
+
+## Getting Started
+To get started with the data analysis tools, please refer to the individual sections for each analysis type. You will find detailed instructions and example code to help you get started with your own data.
+
+## Positronium Lifetime Analysis
+[Download the Positronium Lifetime PDF](lab_positronium_lifetime/plots/total_spectrum.pdf)
+
+[Link to Positronium Lifetime Analysis documentation and code](lab_positronium_lifetime)
+
+## Compton Scattering Analysis
+[Link to Compton Scattering Analysis documentation and code](lab_compton_scattering)
+
+## Stern-Gerlach Analysis
+[Link to Stern-Gerlach Analysis documentation and code](lab_stern_gerlach)
+
+## Laue Crystal Scattering (In Progress)
+[Link to Laue Crystal Scattering documentation and code]
+
+## Contributing
+We dont welcome contributions from the open-source community.
+
+## License
+Feel free to use and modify the code.
+
+We hope this repository proves to be a valuable resource for your data analysis needs. 
+
+Happy data analysis!
