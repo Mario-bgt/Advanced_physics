@@ -45,7 +45,13 @@ plt.title('Residuals of the Gaussian fit of measurement 1')
 plt.legend()
 plt.savefig('plots/gaussian_fit_residuals_m1.pdf')
 plt.show()
+err_a0 = cov[0][0]
 err_mean = cov[1][1]
 err_std = cov[2][2]
+print('a0: {} +- {}'.format(params[0], np.sqrt(err_a0)))
 print('Mean: {} +- {}'.format(params[1], np.sqrt(err_mean)))
 print('Std: {} +- {}'.format(params[2], np.sqrt(err_std)))
+
+# calculate the total time
+total_time = params[1] + params[2]
+print('Total time: {} +- {}'.format(total_time, np.sqrt(err_mean**2 + err_std**2)))

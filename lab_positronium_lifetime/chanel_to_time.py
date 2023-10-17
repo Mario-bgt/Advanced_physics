@@ -48,7 +48,7 @@ plt.show()
 for i in peaks:
     x_data = x_vals[i-100:i+100]
     y_data = y_vals[i-100:i+100]
-    params = fit_gaussian(x_data, y_data)
+    params, cov = fit_gaussian(x_data, y_data)
     mean.append(params[1])
     sigmas.append(params[2])
     plt.plot(x_data, y_data, label='Measurement 1')
@@ -77,7 +77,7 @@ mean = np.array(mean)
 popt, _ = fit_linear(mean, time)
 print(popt)
 # plt.plot(mean, time, 'x', label='Data', color='black')
-plt.errorbar(mean, time, xerr=sigmas, fmt='x', label='Error')
+plt.errorbar(mean, time, xerr=sigmas, fmt='x', label='Mean', color='black')
 plt.plot(mean, linear(mean, popt[0], popt[1]), label='Linear fit', color='red', linestyle='--')
 plt.xlabel('Channel')
 plt.ylabel('Time [s]')

@@ -6,8 +6,8 @@ data = read_spe_file('data/total_spec.Spe')
 
 x_vals = np.arange(0, len(data), 1)
 y_vals = np.array(data)
-x_vals = x_vals[:8000]
-y_vals = y_vals[:8000]
+x_vals = x_vals[90:8000]
+y_vals = y_vals[90:8000]
 
 # plot the whole spectrum
 plt.plot(x_vals, y_vals, label='Total spectrum')
@@ -18,7 +18,7 @@ plt.annotate('511 keV', xy=(2650, 900), xytext=(2650, 1200),
              fontsize=12)
 plt.annotate('1275 keV', xy=(6550, 100), xytext=(6550, 400),
              arrowprops=dict(arrowstyle='->'),
-             fontsize=12)
+             fontsize=12)/
 
 plt.annotate('"Compton edge"', xy=(2000, 250), xytext=(4000, 600),
              arrowprops=dict(arrowstyle='->'),
