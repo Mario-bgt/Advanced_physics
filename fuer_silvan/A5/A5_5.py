@@ -5,11 +5,17 @@ def compress(data):
     keys = []
     vaL_DIC = []
     for i in data:
-        vaL_DIC.append(tuple(i.values()))
         for j in i:
             if j not in keys:
                 keys.append(j)
     keys.sort()
+    for i in data:
+        temp_lyst = []
+        for j in keys:
+            if j in i:
+                temp_lyst.append(i[j])
+        vaL_DIC.append(tuple(temp_lyst))
+
     return tuple(keys), vaL_DIC
 
 
