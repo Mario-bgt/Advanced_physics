@@ -40,7 +40,11 @@ lower = 8400
 x_vals = x_vals[lower:upper]
 y_vals = y_vals[lower:upper]
 
-
+# Outcomment the next 4 lines if you want it to compile fast, this does Latex label style
+A=6
+plt.rc('figure', figsize=[46.82 * .5**(.5 * A), 33.11 * .5**(.5 * A)])
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
 plt.plot(x_vals, data[lower:upper], label='Measurement 2')
 plt.plot(x_vals, gauss_expo_convolution(x_vals, *params), label='fit')
 # also plot the gaussian and expo part
@@ -49,7 +53,7 @@ plt.plot(x_vals, gauss_expo_convolution(x_vals, *params), label='fit')
 plt.grid()
 plt.xlabel('time (s)')
 plt.ylabel('Counts')
-plt.title('fit of measurement 2')
+plt.title(r'\textbf{fit of measurement 2}')
 plt.legend()
 plt.savefig('plots/gaussian_fit_m2_v2.pdf')
 plt.show()
@@ -63,7 +67,7 @@ plt.plot(x_vals, y_error, label='Residuals')
 plt.grid()
 plt.xlabel('Time (s)')
 plt.ylabel('Residuals')
-plt.title('Residuals of the fit of measurement 2')
+plt.title(r'\textbf{Residuals of the fit of measurement 2}')
 plt.legend()
 plt.savefig('plots/gaussian_fit_residuals_m2_v2.pdf')
 plt.show()
@@ -78,13 +82,6 @@ print('A: {} +- {}'.format(params[3], err_a))
 
 
 
-time_1 = 2.694793279259723e-08
-err_time_1 =  1.1162952147595903e-12
-
-time_al_reaches_detector = mu_fit - time_1
-err_time_al_reaches_detector = np.sqrt(err_mean**2 + err_time_1**2)
-print('Time when Al reaches detector: {} +- {}'.format(time_al_reaches_detector, err_time_al_reaches_detector))
-# calculate the total time
-total_time = time_1 + sigma_fit + time_al_reaches_detector + decay_fit
-err_total_time = np.sqrt(err_time_1**2 + err_std**2 + err_time_al_reaches_detector**2 + err_tau**2)
-print('Total time: {} +- {}'.format(total_time, err_total_time))
+tot_time = mu_fit + sigma_fit + decay_fit
+err_tot_time = np.sqrt(err_mean**2 + err_std**2 + err_tau**2)
+print('Total time: {} +- {}'.format(tot_time, err_tot_time))

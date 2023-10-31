@@ -32,12 +32,16 @@ peaks = [8890, 10175, 11510, 12800, 14120, 15410]
 mean = []
 sigmas = []
 time = [0, 4*10**-9, 8*10**-9, 12*10**-9, 16*10**-9, 20*10**-9]
-
+# Outcomment the next 4 lines if you want it to compile fast, this does Latex label style
+A=6
+plt.rc('figure', figsize=[46.82 * .5**(.5 * A), 33.11 * .5**(.5 * A)])
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
 plt.plot(x_vals, y_vals, label='Data')
 plt.grid()
 plt.xlabel('Channel')
 plt.ylabel('Counts')
-plt.title('Raw data for the time calibration')
+plt.title(r'\textbf{Raw data for the time calibration}')
 plt.legend()
 # plt.xticks(peaks, time)
 plt.savefig('plots/time_calibration_raw_data.pdf')
@@ -80,7 +84,7 @@ plt.errorbar(mean, time, xerr=sigmas, fmt='x', label='Mean', color='black')
 plt.plot(mean, linear(mean, popt[0], popt[1]), label='Linear fit', color='red', linestyle='--')
 plt.xlabel('Channel')
 plt.ylabel('Time [s]')
-plt.title('Linear fit of channel vs time')
+plt.title(r'\textbf{Linear fit of channel vs time}')
 plt.legend()
 plt.grid()
 plt.savefig('plots/time_calibration_linear_fit.pdf')

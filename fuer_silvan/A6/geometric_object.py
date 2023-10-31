@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class GeometricObject:
+class GeometricObject(ABC):
 
     def __init__(self, color, filled):
         self.color = color

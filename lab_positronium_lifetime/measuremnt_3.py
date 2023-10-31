@@ -31,6 +31,10 @@ def model_function(data, mu, sigma, decay1, decay2, a1, a2):
 initial_guess = [2.72e-08, 1.8e-10, 2e-09, 1e-10, 200,200]
 # initial_guess = [180, 180, 180, 2.7*10**(-8), 1e-11, 1.25*10**(-10), 1.42*10**(-7)]
 # plot the inital guess
+A=6
+plt.rc('figure', figsize=[46.82 * .5**(.5 * A), 33.11 * .5**(.5 * A)])
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
 plt.plot(x_data, y_data, label='Data with Noise')
 plt.plot(x_data, model_function(x_data, *initial_guess), 'r--', label='Initial Guess')
 plt.plot(x_data, initial_guess[5]*np.exp(-1 * ((x_data - initial_guess[0])**2) / (2 * initial_guess[1]**2)), 'g--', label='Gaussian')
@@ -53,17 +57,16 @@ mu_fit, sigma_fit, decay1_fit, decay2_fit, a1_fit, a2_fit = params
 
 
 # Plot the original data and the fitted curve
-plt.figure(figsize=(10, 6))
-plt.scatter(x_data, y_data, label='Data', s=10, color='black', marker='o', alpha=0.5)
+plt.scatter(x_data, y_data, label='Data', s=10, color='yellow', marker='o', alpha=0.5, edgecolors='black')
 plt.plot(x_data, model_function(x_data, *params), 'r-', label='Fitted Curve')
 # Plot individual components (Gaussian and two exponential decays)
-plt.fill_between(x_data, y_data, color='yellow', alpha=0.5)
-plt.plot(x_data, a1_fit*gauss_expo_convolution(x_data, mu_fit,sigma_fit,decay1_fit), 'y--', label='Exponential 1')
+plt.fill_between(x_data, model_function(x_data, *params), color='yellow', alpha=0.5)
+plt.plot(x_data, a1_fit*gauss_expo_convolution(x_data, mu_fit,sigma_fit,decay1_fit), 'm--', label='Exponential 1')
 plt.plot(x_data, a2_fit*gauss_expo_convolution(x_data, mu_fit,sigma_fit,decay2_fit), 'b--', label='Exponential 2')
 plt.legend()
 plt.xlabel('time [s]')
 plt.ylabel('Counts')
-plt.title('Fitting Data with Gaussian Detector and Two Exponential Decays')
+plt.title(r'\textbf{Fitting Data with Gaussian Detector and Two Exponential Decays}')
 plt.grid()
 plt.savefig('plots/m3_fitting_data.pdf')
 plt.show()
@@ -76,7 +79,7 @@ plt.plot(x_data, y_error, label='Residuals')
 plt.grid()
 plt.xlabel('Time (s)')
 plt.ylabel('Residuals')
-plt.title('Residuals of the Gaussian fit of measurement 3')
+plt.title(r'\textbf{Residuals of the Gaussian fit of measurement 3}')
 plt.legend()
 plt.savefig('plots/gaussian_fit_residuals_m3.pdf')
 plt.show()

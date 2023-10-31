@@ -17,6 +17,11 @@ lower = 8000
 x_vals = x_vals[lower:upper]
 y_vals = y_vals[lower:upper]
 
+# Outcomment the next 4 lines if you want it to compile fast, this does Latex label style
+A=6
+plt.rc('figure', figsize=[46.82 * .5**(.5 * A), 33.11 * .5**(.5 * A)])
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
 
 plt.plot(x_vals, data[lower:upper], label='Measurement 1')
 plt.plot(x_vals, gaussian(x_vals, *params), label='Gaussian fit')
@@ -26,7 +31,7 @@ plt.axvline(params[1] + params[2], color='g', label='Mean + std', linestyle='--'
 plt.grid()
 plt.xlabel('Time (s) ')
 plt.ylabel('Counts')
-plt.title('Gaussian fit of measurement 1')
+plt.title(r'\textbf{Gaussian fit of measurement 1}')
 plt.legend()
 plt.savefig('plots/gaussian_fit_m1.pdf')
 plt.show()
@@ -41,7 +46,7 @@ plt.plot(x_vals, y_error, label='Residuals')
 plt.grid()
 plt.xlabel('Time (s)')
 plt.ylabel('Residuals')
-plt.title('Residuals of the Gaussian fit of measurement 1')
+plt.title(r'\textbf{Residuals of the Gaussian fit of measurement 1}')
 plt.legend()
 plt.savefig('plots/gaussian_fit_residuals_m1.pdf')
 plt.show()
