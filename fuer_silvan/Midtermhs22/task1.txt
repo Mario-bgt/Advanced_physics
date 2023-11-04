@@ -1,0 +1,34 @@
+Evaluate this:
+part 1)
+False
+False
+True
+True
+part2)
+False
+True
+False
+True
+part3)
+True
+False
+True
+True
+
+Loops:
+part1)
+False
+True
+False
+True
+part2)
+True
+True
+false
+false
+part3)
+False
+false
+true
+true
+
