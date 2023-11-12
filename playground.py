@@ -1,66 +1,51 @@
 #!/usr/bin/env python3
 
-def is_valid_IPv4_octet(octet):
-    """Returns True if octet represents a valid IPv4 octet, False otherwise"""
-    if octet.isdigit():
-        val = int(octet)
-        if 0 <= val <= 255:
-            return True
+class MagicDrawingBoard:
+    def __init__(self, x, y):
+        if x < 1 or y < 1:
+            raise Warning
+        self.x = x
+        self.y = y
+        self.field = [[0 for i in range(x)] for j in range(y)]
+
+    def pixel(self, coordinate):
+        if coordinate[0] > self.x or coordinate[1] > self.y or coordinate[0] < 0 or coordinate[1] < 0:
+            raise Warning
         else:
-            return False
-    else:
-        return False
+            self.field[coordinate[1]][coordinate[0]] = 1
 
-
-def is_valid_IPv4(ip):
-    """Returns True if ip represents a valid IPv4 address, False otherwise"""
-    octets = ip.split(".")
-    if len(octets) != 4:
-        return False
-    for octet in octets:
-        if not is_valid_IPv4_octet(octet):
-            return False
-    return True
-
-
-def is_valid_IPv6_hextet(hextet):
-    """Returns True if hextet represents a valid IPv6 hextet, False otherwise"""
-    try:
-        int(hextet, 16)
-        val = int(hextet, 16)
-        if 0 <= val <= 65535:
-            return True
+    def rect(self, coordinate1, coordinate2):
+        if coordinate1[0] > self.x or coordinate1[1] > self.y or coordinate1[0] < 0 or coordinate1[1] < 0:
+            raise Warning("Coordinates out of bounds")
+        elif coordinate2[0] > self.x or coordinate2[1] > self.y or coordinate2[0] < 0 or coordinate2[1] < 0:
+            raise Warning("Coordinates out of bounds")
+        elif coordinate1[0] > coordinate2[0] or coordinate1[1] > coordinate2[1]:
+            raise Warning('The rectangle must be "positive", i.e., the end coordinates must be to the lower right '
+                             'of the start coordinates.')
         else:
-            return False
-    except ValueError:
-        return False
+            for i in range(coordinate1[1], coordinate2[1]):
+                for j in range(coordinate1[0], coordinate2[0]):
+                    self.field[i][j] = 1
+
+    def img(self):
+        string = ""
+        for i in range(self.y):
+            for j in range(self.x):
+                string += str(self.field[i][j])
+            string += "\n"
+        return string[:-1]
+
+    def reset(self):
+        self.field = [[0 for i in range(self.x)] for j in range(self.y)]
 
 
-
-
-def is_valid_IPv6(ip):
-    """Returns True if ip represents a valid IPv6 address, False otherwise"""
-    hextets = ip.split(":")
-    if len(hextets) != 8:
-        return False
-    for hextet in hextets:
-        if not is_valid_IPv6_hextet(hextet):
-            return False
-    return True
-
-
-
-def is_valid_IP(ip):
-    """Returns True if ip represents a valid IPv4 or IPv6 address False otherwise"""
-    if is_valid_IPv4(ip):
-        return True
-    elif is_valid_IPv6(ip):
-        return True
-    else:
-        return False
-
-
-print(is_valid_IPv4("127.0.0.1"))
-print(is_valid_IPv4("300.0.0.1"))
-print(is_valid_IPv6("2001:0db8:85a3:0000:0000:8a2e:0370:7334"))
-print(is_valid_IPv6("2001:0db8:85a3:0:0000:8a2e:0370:7334:1234"))
+db = MagicDrawingBoard(6,4) # instantiation of a specific size
+db.pixel((1,1)) # draw at one coordinate
+db.rect((2,2), (5,4)) # draw a rectangle
+img = db.img() # return the drawn image
+print(img)
+print(0 < 0)
+db.pixel((0,0)) # draw at one coordinate
+print("*****new plot after pixel*****")
+print(db.img())
+db.reset() # reset the field again

@@ -1,41 +1,167 @@
 #!/usr/bin/env python3
 from unittest import TestCase
-
-import playground as script
-
-# You'll probably want to write at least two tests for each of the functions,
-# one passing a valid and one passing an invalid value to confirm that each
-# individual function works on its own.
-
-# Here' we've already provided a few examples. You should be able to fill
-# in the empty strings by yourself by studying the task description:
-
-IPv4_OCTET = "255"
-IPv4_OCTET_INVALID = "256"
-
-IPv4 = "127.0.0.1"                 # fill this in yourself
-IPv4_INVALID = "300.0.0.1"         # fill this in yourself
-
-IPv6_HEXTET = "fff"
-IPv6_HEXTET_INVALID = "hello!!!"  # fill this in yourself
-
-IPv6 = "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
-IPv6_INVALID = "2001:0db8:85a3:0:0000:8a2e:0370:7334:1234"         # fill this in yourself
-
-IP = "192.168.1.1"
-IP_INVALID = "A string that is not a valid IP"
+from script import move
 
 
-class TasksTestSuite(TestCase):
+# You are supposed to develop the functionality in a test-driven way.
+# Think about relevant test cases and extend the following test suite
+# until all requirements of the description are covered. The test suite
+# will be run against various correct and incorrect implementations, so
+# make sure that you only test the `move` function and stick strictly
+# to its defined signature.
+#
+# Make sure that you define test methods and that each method
+# _directly_ includes an assertion in the body, or -otherwise- the
+# grading will mark the test suite as invalid.
+class MoveTestSuite(TestCase):
 
-    # we already provide 2 tests for the first two examples (valid/invalid octet)
-    def test_ipv4_octet_valid(self):
-        actual = script.is_valid_IPv4_octet(IPv4_OCTET)
-        self.assertEqual(actual, True)
+    def test_move_right(self):
+        state = (
+            "#####   ",
+            "###    #",
+            "#   o ##",
+            "   #####"
+        )
+        actual = move(state, "right")
+        expected = (
+            (
+                "#####   ",
+                "###    #",
+                "#    o##",
+                "   #####"
+            ),
+            ("left", "up")
+        )
+        # uncomment the following line once you've implemented move
+        self.assertEqual(expected, actual)
 
-    def test_ipv4_octet_invalid(self):
-        actual = script.is_valid_IPv4_octet(IPv4_OCTET_INVALID)
-        self.assertEqual(actual, False)
+    def test_move_up(self):
+        # NOTE: this test case is buggy and needs fixing!
+        state = (
+            "#####   ",
+            "###    #",
+            "#   o ##",
+            "   #####"
+        )
+        actual = move(state, "up")
+        expected = (
+            (
+                "#####   ",
+                "### o  #",
+                "#     ##",
+                "   #####"
+            ),
+            ('down', 'left', 'right')
+        )
+        # uncomment the following line once you've implemented move
+        self.assertEqual(expected, actual)
 
-    # write more test cases, one for each of the examples above!
+    def test_move_down(self):
+        state = (
+            "#####   ",
+            "### o  #",
+            "#     ##",
+            "   #####"
+        )
+        actual = move(state, "down")
+        expected = (
+            (
+                "#####   ",
+                "###    #",
+                "#   o ##",
+                "   #####"
+            ),
+            ('left', 'right', 'up')
+        )
+        # uncomment the following line once you've implemented move
+        self.assertEqual(expected, actual)
 
+    def test_move_left(self):
+        state = (
+            "#####   ",
+            "### o  #",
+            "#     ##",
+            "   #####"
+        )
+        actual = move(state, "left")
+        expected = (
+            (
+                "#####   ",
+                "###o   #",
+                "#     ##",
+                "   #####"
+            ),
+            ('down', 'right')
+        )
+        # uncomment the following line once you've implemented move
+        self.assertEqual(expected, actual)
+
+    def test_move_invalid_state(self):
+        state = (
+            "#####   ",
+            "### o  #",
+            "#     ##",
+            "   #####"
+        )
+        with self.assertRaises(Warning):
+            move(state, "up")
+
+    def test_wrong_character(self):
+        state = (
+            "###N#   ",
+            "### o  #",
+            "#     ##",
+            "   #####"
+        )
+        with self.assertRaises(Warning):
+            move(state, "left")
+
+    def test_not_same_length(self):
+        state = (
+            "######   ",
+            "### o  #",
+            "#     ##",
+            "   ####"
+        )
+        with self.assertRaises(Warning):
+            move(state, "left")
+
+    def test_too_many_players(self):
+        state = (
+            "#####   ",
+            "### o  #",
+            "# o   ##",
+            "   #####"
+        )
+        with self.assertRaises(Warning):
+            move(state, "left")
+
+    def test_no_possible_moves(self):
+        state = (
+            "#####   ",
+            "###o#   #",
+            "#  #  ##",
+            "   #####"
+        )
+        with self.assertRaises(Warning):
+            move(state, "left")
+
+    def test_invalid_dimension(self):
+        state = (
+            "",
+            "",
+            "",
+            ""
+        )
+        with self.assertRaises(Warning):
+            move(state, "left")
+
+    def test_exceed_boundaries(self):
+        state = (
+                "###o  ",
+                "###   ",
+                "#    #",
+                "    ##"
+            )
+        with self.assertRaises(Warning):
+            move(state, "up")

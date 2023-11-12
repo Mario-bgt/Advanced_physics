@@ -4,11 +4,13 @@ False
 False
 True
 True
+
 part2)
 False
 True
 False
 True
+
 part3)
 True
 False
@@ -21,11 +23,13 @@ False
 True
 False
 True
+
 part2)
 True
 True
 false
 false
+
 part3)
 False
 false
