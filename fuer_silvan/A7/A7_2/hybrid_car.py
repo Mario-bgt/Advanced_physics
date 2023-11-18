@@ -49,8 +49,10 @@ class HybridCar(CombustionCar, ElectricCar):
             raise Warning
         if dist < 0:
             raise Warning
+        if dist > self.get_remaining_range():
+            raise Warning
         if dist > self.get_remaining_range(ndriving=False):
-            dist = dist - self.get_remaining_range(ndriving=False)
+            dist -= self.get_remaining_range(ndriving=False)
             if self.drive_mode == 'electric':
                 self.battery = 0
                 self.switch_to_combustion()
