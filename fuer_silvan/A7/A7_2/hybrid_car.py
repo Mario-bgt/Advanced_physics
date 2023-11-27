@@ -54,11 +54,11 @@ class HybridCar(CombustionCar, ElectricCar):
             if self.drive_mode == 'electric':
                 self.battery = 0
                 self.switch_to_combustion()
-                CombustionCar.drive(self, dist)
+                self.drive(dist)
             else:
                 self.gas = 0
                 self.switch_to_electric()
-                ElectricCar.drive(self, dist)
+                self.drive(dist)
 
         if self.drive_mode == 'electric':
             ElectricCar.drive(self, dist)
