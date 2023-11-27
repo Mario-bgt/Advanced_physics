@@ -12,39 +12,17 @@ class Publication:
         return self.__title
 
     def get_authors(self):
-        return self.__authors
+        return tuple(self.__authors)
 
     def get_year(self):
         return self.__year
 
-    def __str__(self):
-        return f"Publication({self.__authors}, {self.__title}, {self.__year})"
-
     def __repr__(self):
         return f"Publication({self.__authors}, {self.__title}, {self.__year})"
 
-    # To implement the required functionality, you will also have to implement several
-    # of the special functions that typically include a double underscore.
-    # We've provided a starting point for one of the operators:
-    def __le__(self, other):
-        if not isinstance(other, Publication):
-            return NotImplemented
-        if self.__year < other.__year:
-            return True
-        elif self.__year > other.__year:
-            return False
-        else:
-            if self.__authors < other.__authors:
-                return True
-            elif self.__authors > other.__authors:
-                return False
-            else:
-                if self.__title < other.__title:
-                    return True
-                else:
-                    return False
-
-        # complete this implementation and add all the other necessary operators!
+    def __str__(self):
+        authors_str = ', '.join(f'\"{author}\"' for author in self.__authors)
+        return f"Publication([{authors_str}], \"{self.__title}\", {self.__year})"
 
     def __eq__(self, other):
         if not isinstance(other, Publication):
@@ -53,7 +31,56 @@ class Publication:
             return True
         else:
             return False
-        # complete this implementation and add all the other necessary operators!
+
+    def __lt__(self, other):
+        if not isinstance(other, Publication):
+            return NotImplemented
+        if self.__authors < other.__authors:
+            return True
+        if len(self.__authors) < len(other.__authors):
+            return True
+        if self.__authors == other.__authors:
+            if self.__title < other.__title:
+                return True
+            elif self.__year < other.__year:
+                return True
+        else:
+            return False
+
+    def __le__(self, other):
+        if not isinstance(other, Publication):
+            return NotImplemented
+        if __eq__(self, other) or __lt__(self, other):
+            return True
+        else:
+            return False
+
+    def __ne__(self, other):
+        if not isinstance(other, Publication):
+            return NotImplemented
+        if __eq__(self, other):
+            return False
+        else:
+            return True
+
+    def __gt__(self, other):
+        if not isinstance(other, Publication):
+            return NotImplemented
+        if __lt__(self, other) or __eq__(self, other):
+            return False
+        else:
+            return True
+
+    def __ge__(self, other):
+        if not isinstance(other, Publication):
+            return NotImplemented
+        if __lt__(self, other):
+            return False
+        else:
+            return True
+
+    def __hash__(self):
+        return hash((tuple(self.__authors), self.__title, self.__year))
 
 
 # You can play around with your implementation in the body of the following 'if'.
@@ -68,7 +95,8 @@ if __name__ == '__main__':
     p = Publication(["Duvall", "Matyas", "Glover"], "Continuous Integration", 2007)
     s = "Publication([\"Duvall\", \"Matyas\", \"Glover\"], \"Continuous Integration\", 2007)"
     print(p)
-    print(str(p) == s)
+    print(s)
+    print(str(p) == s)  # True
 
     p1 = Publication(["A"], "B", 1234)
     p2 = Publication(["A"], "B", 1234)
