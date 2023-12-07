@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 class Matrix:
     def __init__(self, matrix):
-        if not isinstance(matrix, list):
-            raise AssertionError("Matrix must be a list")
-        if len(matrix) < 1:
-            raise AssertionError("Matrix must not be empty")
-        if matrix == [[]]:
-            raise AssertionError("Matrix must not be empty2")
-        if not isinstance(matrix[0], list):
-            raise AssertionError("Matrix must be a list of lists")
-        for row in matrix:
-            for element in row:
-                if not isinstance(element, int) and not isinstance(element, float):
-                    raise AssertionError("Matrix must only contain numbers")
+        assert self.is_valid_matrix(matrix), "Invalid matrix"
         self.__matrix = matrix
 
+    def is_valid_matrix(self, matrix):
+        if not isinstance(matrix, list) or not all(isinstance(row, list) for row in matrix):
+            return False
+
+        if not any(row for row in matrix):
+            return False
+
+        return (
+            all(isinstance(elem, (int, float)) for row in matrix for elem in row) and
+            len({len(row) for row in matrix}) == 1
+        )
+        
     # Remember that instanes variables should be private (i.e., prepended with two underscores: __)
 
     def __add__(self, other):
