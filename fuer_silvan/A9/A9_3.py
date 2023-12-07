@@ -1,17 +1,18 @@
+#!/usr/bin/env python3
 class Matrix:
     def __init__(self, matrix):
         if not isinstance(matrix, list):
             raise AssertionError("Matrix must be a list")
+        if len(matrix) < 1:
+            raise AssertionError("Matrix must not be empty")
+        if matrix == [[]]:
+            raise AssertionError("Matrix must not be empty2")
         if not isinstance(matrix[0], list):
             raise AssertionError("Matrix must be a list of lists")
         for row in matrix:
             for element in row:
                 if not isinstance(element, int) and not isinstance(element, float):
                     raise AssertionError("Matrix must only contain numbers")
-        if len(matrix) < 1:
-            raise AssertionError("Matrix must not be empty")
-        if matrix == [[]]:
-            raise AssertionError("Matrix must not be empty")
         self.__matrix = matrix
 
     # Remember that instanes variables should be private (i.e., prepended with two underscores: __)
@@ -58,9 +59,3 @@ class Matrix:
 
     def get_matrix(self):
         return self.__matrix
-
-
-matrix1 = Matrix([[1, 2], [3, 4]])
-matrix2 = Matrix([[5, 6, 7], [8, 9, 10], [11, 12, 13]])
-result_matrix = matrix1 * matrix2
-print(result_matrix.get_matrix())

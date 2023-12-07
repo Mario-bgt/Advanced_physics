@@ -16,7 +16,6 @@ def get_possible_nrs(n):
     possible_nrs_for_juliet = list(set(possible_nrs_for_juliet))
     return [nr for nr in possible_nrs_for_juliet if nr in wa_nrs]
 
-
 # For this particular number, the function should find the
 # last element in wa_nrs
 print(get_possible_nrs("076432165"))

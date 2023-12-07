@@ -1,9 +1,17 @@
+#!/usr/bin/env python3
+
 # The signatures of this class and its task methods are required for the automated grading to work.
 # You must not change the names or the list of parameters.
 # You may introduce grading/protected utility methods though.
 class Publication:
 
     def __init__(self, authors, title, year):
+        if not isinstance(authors, list) or not all(isinstance(author, str) for author in authors):
+            raise TypeError("Authors must be a list of strings")
+        if not isinstance(title, str):
+            raise TypeError("Title must be a string")
+        if not isinstance(year, int):
+            raise TypeError("Year must be an integer")
         self.__authors = authors
         self.__title = title
         self.__year = year
@@ -12,7 +20,7 @@ class Publication:
         return self.__title
 
     def get_authors(self):
-        return tuple(self.__authors)
+        return self.__authors.copy()
 
     def get_year(self):
         return self.__year
@@ -82,7 +90,6 @@ class Publication:
     def __hash__(self):
         return hash((tuple(self.__authors), self.__title, self.__year))
 
-
 # You can play around with your implementation in the body of the following 'if'.
 # The contained statements will be ignored while evaluating your solution.
 if __name__ == '__main__':
@@ -95,8 +102,7 @@ if __name__ == '__main__':
     p = Publication(["Duvall", "Matyas", "Glover"], "Continuous Integration", 2007)
     s = "Publication([\"Duvall\", \"Matyas\", \"Glover\"], \"Continuous Integration\", 2007)"
     print(p)
-    print(s)
-    print(str(p) == s)  # True
+    print(str(p) == s)
 
     p1 = Publication(["A"], "B", 1234)
     p2 = Publication(["A"], "B", 1234)
