@@ -26,7 +26,8 @@ class Publication:
         return self.__year
 
     def __repr__(self):
-        return f"Publication({self.__authors}, {self.__title}, {self.__year})"
+        authors_str = ', '.join(f'\"{author}\"' for author in self.__authors)
+        return f"Publication([{authors_str}], \"{self.__title}\", {self.__year})"
 
     def __str__(self):
         authors_str = ', '.join(f'\"{author}\"' for author in self.__authors)
@@ -58,7 +59,7 @@ class Publication:
     def __le__(self, other):
         if not isinstance(other, Publication):
             return NotImplemented
-        if __eq__(self, other) or __lt__(self, other):
+        if self.__eq__(other) or self.__lt__(other):
             return True
         else:
             return False
@@ -66,7 +67,7 @@ class Publication:
     def __ne__(self, other):
         if not isinstance(other, Publication):
             return NotImplemented
-        if __eq__(self, other):
+        if self.__eq__(other):
             return False
         else:
             return True
@@ -74,7 +75,7 @@ class Publication:
     def __gt__(self, other):
         if not isinstance(other, Publication):
             return NotImplemented
-        if __lt__(self, other) or __eq__(self, other):
+        if self.__lt__(other) or self.__eq__(other):
             return False
         else:
             return True
@@ -82,7 +83,7 @@ class Publication:
     def __ge__(self, other):
         if not isinstance(other, Publication):
             return NotImplemented
-        if __lt__(self, other):
+        if self.__lt__(other):
             return False
         else:
             return True
