@@ -1,0 +1,25 @@
+mc-classes(3)
+    -T
+    -T
+    -T
+    -F
+mc-exceptions(3)
+    -F
+    -F
+    -F
+    -T
+mc-git(1)
+    -T
+    -F
+    -T
+    -F
+mc-inheritance(1)
+    -T
+    -F
+    -T
+    -F
+mc-testing(3)
+    -F
+    -T
+    -F
+    -F
