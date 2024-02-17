@@ -1,0 +1,578 @@
+<!DOCTYPE html><html lang="en"><h2>Note</h2>
+<p><strong>Important</strong>: You have an opportunity to potentially improve your score.</p>
+<p>Visit the OLAT forum and read the sticky thread for more information. It describes how the exam results and review files are to be interpreted, and how to proceed.</p><h1>Your total score: 73.0 / 90</h1><br><hr><br><h2>Classes</h2>
+<p>Decide for each of the following statements whether it is true or false. You will receive full points if all your choices are correct, half points if 3 chocies are correct, and no points otherwise.</p>
+<ul>
+<li><span>Class attributes are referenced by both the class and its instances.</span><br><span>Correct answer: True.</span><br><span>Your answer: True.</span></li><li><span>A class is an object.</span><br><span>Correct answer: True.</span><br><span>Your answer: True.</span></li><li><span>All classes can be instantiated.</span><br><span>Correct answer: False.</span><br><span>Your answer: True.</span></li><li><span>An abstract class cannot be inherited from.</span><br><span>Correct answer: False.</span><br><span>Your answer: False.</span></li></ul>
+
+<h4>Your score: 1.0 / 2</h4><br><hr><br><h2>Exceptions</h2>
+<p>Decide for each of the following statements whether it is true or false. You will receive full points if all your choices are correct, half points if 3 chocies are correct, and no points otherwise.</p>
+<ul>
+<li><span>An exception in Python is always fatal and will stop the execution of the program, regardless of whether it is handled or not.</span><br><span>Correct answer: False.</span><br><span>Your answer: False.</span></li><li><span>The 'else' block is only executed if an exception is raised in the preceding 'try' block.</span><br><span>Correct answer: False.</span><br><span>Your answer: False.</span></li><li><span>An exception can be raised using the 'throw' keyword.</span><br><span>Correct answer: False.</span><br><span>Your answer: True.</span></li><li><span>When using an 'except' block without specifying an exception type, all exceptions are caught.</span><br><span>Correct answer: True.</span><br><span>Your answer: True.</span></li></ul>
+
+<h4>Your score: 1.0 / 2</h4><br><hr><br><h2>Functions</h2>
+<p>Decide for each of the following statements whether it is true or false. You will receive full points if all your choices are correct, half points if 3 chocies are correct, and no points otherwise.</p>
+<ul>
+<li><span>All functions take at least one argument.</span><br><span>Correct answer: False.</span><br><span>Your answer: False.</span></li><li><span>Functions inherit from object.</span><br><span>Correct answer: True.</span><br><span>Your answer: True.</span></li><li><span>A function that has no return statements does not return anything, ever.</span><br><span>Correct answer: False.</span><br><span>Your answer: False.</span></li><li><span>Functions can return functions.</span><br><span>Correct answer: True.</span><br><span>Your answer: True.</span></li></ul>
+
+<h4>Your score: 2 / 2</h4><br><hr><br><h2>Mutability</h2>
+<p>Decide for each of the following statements whether it is true or false. You will receive full points if all your choices are correct, half points if 3 chocies are correct, and no points otherwise.</p>
+<ul>
+<li><span>Two objects that are equal must have the same hash (if any).</span><br><span>Correct answer: True.</span><br><span>Your answer: True.</span></li><li><span>When implementing __hash__, one must also implement the six rich comparison operators.</span><br><span>Correct answer: False.</span><br><span>Your answer: False.</span></li><li><span>Calling hash(...) on an object should always return the same value (within the same program execution).</span><br><span>Correct answer: True.</span><br><span>Your answer: True.</span></li><li><span>Dictionary keys must be mutable.</span><br><span>Correct answer: False.</span><br><span>Your answer: False.</span></li></ul>
+
+<h4>Your score: 2 / 2</h4><br><hr><br><h2>Functions</h2>
+<p>Implement a class <code>Data</code> which takes a list of objects as the only constructor argument and refers to it using a public attribute <code>data</code>.</p>
+<p><code>Data</code> should provide a method <code>compute</code> which takes two functions as arguments. <code>compute</code> should call the given functions with the <code>Data</code> object's <code>data</code> as the argument and return the two resulting values in a tuple.</p>
+<p>The <code>Data</code> class should work with arbitrary data types, as long as any functions passed are compatible with whatever <code>data</code> is stored.</p>
+<p>Use the following template:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Data</span>:
+    <span style="color: #008000; font-weight: bold">pass</span>
+</pre></div>
+
+<p>The following example illustrates how the solution function may be called:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>objects <span style="color: #666666">=</span> [<span style="color: #666666">1.7</span>, <span style="color: #666666">2.3</span>, <span style="color: #666666">3</span>, <span style="color: #666666">4</span>]
+d <span style="color: #666666">=</span> Data(objects)
+<span style="color: #008000">print</span>( d<span style="color: #666666">.</span>data <span style="color: #AA22FF; font-weight: bold">is</span> objects )
+<span style="color: #008000">print</span>( d<span style="color: #666666">.</span>compute(<span style="color: #008000">sum</span>, <span style="color: #008000">min</span>) )
+<span style="color: #008000">print</span>( d<span style="color: #666666">.</span>compute(<span style="color: #008000">min</span>, <span style="color: #008000">max</span>) )
+</pre></div>
+
+<p>The calls above should produce the following output:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>True
+(11.0, 1.7)
+(1.7, 4)
+</pre></div>
+
+<h4>Your submission:</h4>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Data</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, dat):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>data <span style="color: #666666">=</span> dat
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">compute</span>(<span style="color: #008000">self</span>, f1, f2):
+        <span style="color: #008000; font-weight: bold">return</span> f1(<span style="color: #008000">self</span><span style="color: #666666">.</span>data), f2(<span style="color: #008000">self</span><span style="color: #666666">.</span>data)
+        
+</pre></div>
+
+<h4>Test results:</h4><ul><li>Data can be instantiated with a list of arbitrary elements ... ok</li><li>Data instance's data attribute refers to list passed in constructor ... ok</li><li>Passing '-'.join into compute with a list of strings as data works correctly ... ok</li><li>Passing sum into compute with a list of numbers as data works correctly ... ok</li></ul><h4>Submission score: 6.0 / 6</h4><br><hr><br><h2>Data Structures</h2>
+<p>Implement a function <code>merge_dicts</code> which takes a list of dictionaries <code>dicts</code> as a positional argument, plus a keyword argument <code>reverse_priority</code>, which should be <code>False</code> by default.</p>
+<p>The function should return a dictionary resulting from merging all the dictionaries in <code>dicts</code>. In other words, the resulting dictionary should contain all items of all dictionaries in <code>dicts</code>. If multiple dictionaries in <code>dicts</code> contain the same key, then the value contained in the last dictionary containing that key (in terms of order within <code>dicts</code>) should take precedence, unless <code>reverse_priority</code> is <code>True</code>, in which case, the first dictionary containing that key should be used.</p>
+<p>Note that <code>merge_dicts</code> should work no matter how many dictionaries are contained in <code>dicts</code>.</p>
+<p>Use the following template:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">merge_dicts</span>():
+    <span style="color: #008000; font-weight: bold">pass</span>
+</pre></div>
+
+<p>The following example illustrates how the solution function may be called:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>d1 <span style="color: #666666">=</span> {<span style="color: #666666">1</span>: <span style="color: #BA2121">&quot;a&quot;</span>, <span style="color: #666666">2</span>: <span style="color: #BA2121">&quot;b&quot;</span>, <span style="color: #666666">3</span>: <span style="color: #BA2121">&quot;c&quot;</span>}
+d2 <span style="color: #666666">=</span> {<span style="color: #666666">1</span>: <span style="color: #666666">1</span>, <span style="color: #666666">20</span>: <span style="color: #666666">2</span>, <span style="color: #666666">300</span>: <span style="color: #666666">3</span>}
+d3 <span style="color: #666666">=</span> {<span style="color: #666666">1</span>: <span style="color: #BA2121">&quot;please&quot;</span>, <span style="color: #666666">2</span>: <span style="color: #BA2121">&quot;send&quot;</span>, <span style="color: #666666">300</span>: <span style="color: #BA2121">&quot;help&quot;</span>}
+<span style="color: #008000">print</span>(merge_dicts([d1, d2, d3]))
+<span style="color: #008000">print</span>(merge_dicts([d1, d2, d3], <span style="color: #008000; font-weight: bold">True</span>))
+</pre></div>
+
+<p>The calls above should produce the following output:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>{1: &#39;please&#39;, 2: &#39;send&#39;, 3: &#39;c&#39;, 20: 2, 300: &#39;help&#39;}
+{1: &#39;a&#39;, 2: &#39;b&#39;, 300: 3, 20: 2, 3: &#39;c&#39;}
+</pre></div>
+
+<h4>Your submission:</h4>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">merge_dicts</span>(dicts, reverse_priority<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">False</span>):
+    res <span style="color: #666666">=</span> {}
+    <span style="color: #008000; font-weight: bold">if</span> reverse_priority:
+        dicts <span style="color: #666666">=</span> dicts[::<span style="color: #666666">-1</span>]
+
+    <span style="color: #008000; font-weight: bold">for</span> d <span style="color: #AA22FF; font-weight: bold">in</span> dicts:
+        res<span style="color: #666666">.</span>update(d)
+
+    <span style="color: #008000; font-weight: bold">return</span> res
+</pre></div>
+
+<h4>Test results:</h4><ul><li>For a list containing five overlapping dictionaries and reverse_priority=True, the correct result is returned ... ok</li><li>For a list containing one dictionary, the dictionary is returned ... ok</li><li>For a list containing two non-overlapping dictionaries, a dictionary containing everything is returned ... ok</li><li>For a list containing two overlapping dictionaries and reverse_priority=True, the correct result is returned ... ok</li><li>For a list containing two overlapping dictionaries, the correct result is returned ... ok</li><li>For an empty list, an empty dictionary is returned ... ok</li><li>Return value is a dictionary ... ok</li></ul><h4>Submission score: 7 / 7</h4><br><hr><br><h2>Recursive Data Structures</h2>
+<p>Implement a class <code>BinaryTree</code>, which represents a tree-like, recursive data structure.</p>
+<p>A <code>BinaryTree</code> is initialized with one positional argument <code>key</code>, which can be of arbitrary type, a keyword argument <code>value</code>, which is a number (<code>0</code> by default), and two more keyword arguments <code>left</code> and <code>right</code>, each of which is another <code>BinaryTree</code> (or <code>None</code> by default).</p>
+<p><code>BinaryTree</code> should have a method <code>tally</code> which takes an argument <code>needle</code> of arbitrary type. <code>tally</code> should recursively traverse the <code>BinaryTree</code> data structure and eventually return a kind-of-sum of all <code>value</code>s in the tree, <em>adding</em> those <code>value</code>s where <code>needle</code> matches <code>key</code>, and <em>subtracting</em> all others. Besides comparing <code>needle</code> to the tree's <code>key</code>, <code>tally</code> will also need to call the <code>left</code> and <code>right</code> <code>BinaryTree</code>'s <code>tally</code> methods recursively to add their return values to the result.</p>
+<p>In the example below, a tree consisting of eight <code>BinaryTree</code> instances is constructed. <code>tree.tally("C")</code> and <code>tree.tally("D")</code> are called on the root (outermost) <code>BinaryTree</code> and return the kind-of-sum according to the rule outlined above.</p>
+<p>To receive partial points, make sure that <code>BinaryTree</code> can at least be instantiated correctly as per the example. Use <em>public</em> attribute names that equal the specified constructor argument names.</p>
+<p>Use the following template:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">BinaryTree</span>:
+    <span style="color: #008000; font-weight: bold">pass</span>
+</pre></div>
+
+<p>The following example illustrates how the solution function may be called:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>tree <span style="color: #666666">=</span> BinaryTree(<span style="color: #BA2121">&quot;root&quot;</span>,
+    left <span style="color: #666666">=</span> BinaryTree(<span style="color: #BA2121">&quot;A&quot;</span>,
+        left <span style="color: #666666">=</span> BinaryTree(<span style="color: #BA2121">&quot;B&quot;</span>, <span style="color: #666666">20</span>,
+            left <span style="color: #666666">=</span> BinaryTree(<span style="color: #BA2121">&quot;C&quot;</span>, <span style="color: #666666">60</span>),
+            right <span style="color: #666666">=</span> BinaryTree(<span style="color: #BA2121">&quot;D&quot;</span>, <span style="color: #666666">-50</span>)
+        ),
+        right <span style="color: #666666">=</span> BinaryTree(<span style="color: #BA2121">&quot;E&quot;</span>,
+            right <span style="color: #666666">=</span> BinaryTree(<span style="color: #BA2121">&quot;D&quot;</span>, <span style="color: #666666">70</span>)
+        )
+    ),
+    right <span style="color: #666666">=</span> BinaryTree(<span style="color: #BA2121">&quot;D&quot;</span>, <span style="color: #666666">80</span>)
+)
+<span style="color: #008000">print</span>(tree<span style="color: #666666">.</span>tally(<span style="color: #BA2121">&quot;C&quot;</span>))  <span style="color: #3D7B7B; font-style: italic"># - 0 - 0 - 20 + 60 - -50 - 0 - 70 - 80</span>
+<span style="color: #008000">print</span>(tree<span style="color: #666666">.</span>tally(<span style="color: #BA2121">&quot;D&quot;</span>))  <span style="color: #3D7B7B; font-style: italic"># - 0 - 0 - 20 - 60 + -50 - 0 + 70 + 80</span>
+</pre></div>
+
+<p>The calls above should produce the following output:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>-60
+20
+</pre></div>
+
+<h4>Your submission:</h4>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">BinaryTree</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, key, value<span style="color: #666666">=0</span>, left<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">None</span>, right<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">None</span>):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>key <span style="color: #666666">=</span> key
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>value <span style="color: #666666">=</span> value
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>left <span style="color: #666666">=</span> left
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>right <span style="color: #666666">=</span> right
+</pre></div>
+
+<h4>Test results:</h4><ul><li>BinaryTree can be instantiated with one, two three or four arguments. Except for the second argument, the arguments may be None. ... ok</li><li>BinaryTree can be instantiated with two arguments ... ok</li><li>BinaryTree can be instantiated with two positional arguments and only a left or only a right tree ... ok</li><li>BinaryTree can be instantiated with two positional arguments and two trees ... ok</li><li>BinaryTree has public attributes with the same names as the constructor arguments ... ok</li><li>BinaryTree key can be of arbitrary types ... ok</li><li>Provided example (with different keys) works correctly ... ERROR</li><li>tally returns correct elements if key matches one deeply nested tree's key ... ERROR</li><li>tally returns correct result if all keys match ... ERROR</li><li>tally returns correct result if key doesn't match and left/right are None ... ERROR</li><li>tally returns correct result if key matches and left/right are None ... ERROR</li><li>tally returns correct result if no keys match ... ERROR</li></ul><h4>Submission score: 6 / 12</h4><br><hr><br><h2>Data Model</h2>
+<p>In the lecture, you learned how Python's data model allows you to supports functionality like <code>==</code>, <code>&lt;=</code> or <code>hash(...)</code>, via methods such as <code>__eq__</code>, <code>__lt__</code> or <code>__hash__</code>. In this task, you will apply this knowledge to implement a class <code>StringDict</code>, which largely functions just like a regular dictionary, but coerces all stored values into strings.</p>
+<p>The example below shows how after instantiating a <code>StringDict</code>, one can set and retrieve values just like with a regular dictionary. However, whenever a value is set, it is immediately converted to a string.</p>
+<p><code>StringDict</code> should at least support the following features:</p>
+<ul>
+<li>setting a value via the bracket notation: <code>d[key] = value</code></li>
+<li>retrieving a value via the bracket notation: <code>d[key]</code></li>
+<li>printing: <code>print(d)</code>, which should appear the same way as when printing a regular dictionary</li>
+<li>printing in a collection: <code>print([d])</code>, which should appear the same way as when printing a regular dictionary in a collection</li>
+<li>getting its size: <code>len(d)</code></li>
+<li>the <code>in</code> operator: <code>123 in d</code>, which, just like with regular dictionaries, checks if a key is present in the <code>StringDict</code></li>
+<li>equality: <code>d1 == d2</code> and <code>d1 != d2</code></li>
+<li>providing an optional, regular dictionary upon instantiation; don't forget to convert the values to strings.</li>
+</ul>
+<p>It is up to you how you make this happen. <code>StringDict</code> does not <em>need to</em> support additional functionality that would be supported by regular dictionaries (such as <code>del(...)</code>, <code>iter(...)</code>, etc.).</p>
+<p><em>Hint</em>: The requirements above will make use of the following methods of <a href="https://docs.python.org/3/reference/datamodel.html#object.__len__">Python's data model</a>: <code>__init__</code>, <code>__len__</code>, <code>__eq__</code>, <code>__str__</code>, <code>__repr__</code>, <code>__setitem__</code>, <code>__getitem__</code>, <code>__contains__</code>.</p>
+<p><em>Hint</em>: Remeber that <code>dict</code> is a class like any other.</p>
+<p><em>Important:</em> Any instance members that aren't methods should be private.</p>
+<p>Use the following template:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">StringDict</span>:
+    <span style="color: #008000; font-weight: bold">pass</span>
+</pre></div>
+
+<p>The following example illustrates how the solution function may be called:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>d1 <span style="color: #666666">=</span> StringDict()
+<span style="color: #008000">print</span>(d1)
+d1[<span style="color: #666666">1</span>] <span style="color: #666666">=</span> <span style="color: #666666">100</span>
+d1[<span style="color: #BA2121">&quot;abc&quot;</span>] <span style="color: #666666">=</span> <span style="color: #008000">print</span>
+<span style="color: #008000">print</span>(d1)
+<span style="color: #008000">print</span>(<span style="color: #008000">isinstance</span>(d1[<span style="color: #666666">1</span>], <span style="color: #008000">str</span>))
+<span style="color: #008000">print</span>(<span style="color: #666666">1</span> <span style="color: #AA22FF; font-weight: bold">in</span> d1)
+<span style="color: #008000">print</span>(<span style="color: #666666">100</span> <span style="color: #AA22FF; font-weight: bold">in</span> d1)
+<span style="color: #008000">print</span>(<span style="color: #008000">len</span>(d1))
+d2 <span style="color: #666666">=</span> StringDict({<span style="color: #BA2121">&quot;abc&quot;</span>: <span style="color: #008000">print</span>, <span style="color: #666666">1</span>: <span style="color: #BA2121">&quot;100&quot;</span>})
+d3 <span style="color: #666666">=</span> StringDict({<span style="color: #BA2121">&quot;abc&quot;</span>: <span style="color: #008000">max</span>})
+<span style="color: #008000">print</span>(d1 <span style="color: #666666">==</span> d2)
+<span style="color: #008000">print</span>(d1 <span style="color: #666666">==</span> d3)
+</pre></div>
+
+<p>The calls above should produce the following output:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>{}
+{1: &#39;100&#39;, &#39;abc&#39;: &#39;&lt;built-in function print&gt;&#39;}
+True
+True
+False
+2
+True
+False
+</pre></div>
+
+<h4>Your submission:</h4>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">StringDict</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, <span style="color: #008000">dict</span> <span style="color: #666666">=</span> {}):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>__dic <span style="color: #666666">=</span> {key: <span style="color: #008000">str</span>(val) <span style="color: #008000; font-weight: bold">for</span> key, val <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">dict</span><span style="color: #666666">.</span>items()}
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__len__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">len</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>__dic)
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__setitem__</span>(<span style="color: #008000">self</span>, key, new_val):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>__dic[key] <span style="color: #666666">=</span> <span style="color: #008000">str</span>(new_val)
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__getitem__</span>(<span style="color: #008000">self</span>, key):
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>__dic[key]
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__str__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">str</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>__dic)
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__repr__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">str</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>__dic)
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__contains__</span>(<span style="color: #008000">self</span>, item):
+        <span style="color: #008000; font-weight: bold">return</span> item <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>__dic
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__eq__</span>(<span style="color: #008000">self</span>, other):
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>__dic <span style="color: #666666">==</span> other<span style="color: #666666">.</span>__dic
+</pre></div>
+
+<h4>Test results:</h4><ul><li>'in' keyword works correctly ... ok</li><li>Setting and then getting several key/value pairs works (and values are coerced to strings) ... ok</li><li>Setting and then getting several key/value pairs works ... ok</li><li>StringDict can be instantiated with a dictionary ... ok</li><li>StringDict can be instantiated with no arguments ... ok</li><li>StringDict instance state is private ... ok</li><li>Supports 'in' keyword ... ok</li><li>Supports bracket notation for getting values ... ok</li><li>Supports bracket notation for setting values ... ok</li><li>Supports len() ... ok</li><li>Two equivalent StringDicts are equal (and values are coerced to strings) ... ok</li><li>Two equivalent StringDicts are equal ... ok</li><li>Two non-equivalent StringDicts are not equal ... ok</li><li>len() returns correct value ... ok</li><li>repr() on a StringDict produces expected value ... ok</li><li>str() on a StringDict produces expected value ... ok</li></ul><h4>Submission score: 8.0 / 8</h4><br><hr><br><h2>White-box Testing</h2>
+<p>You are given a function <code>process</code>. Implement a test class which ensures that any alternative implementations would exhibit the same behavior as <code>process</code>.</p>
+<p>You should assume that <code>process</code> is in scope, just like in the template. You do not need to import <code>process</code>. Your solution will be graded based on how well it can recognize potential bugs in alternative implementations. Make sure you test edge cases for each of the parameters where appropriate.</p>
+<p><strong>Important</strong>: Use the provided template and do not change the name of the test class.</p>
+<p><strong>Important</strong>: You must hand in your test class, including the signature. Handing-in <code>process</code> is unnecessary.</p>
+<p>Use the following template:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">process</span>(string, needle, mode<span style="color: #666666">=</span><span style="color: #BA2121">&quot;remove&quot;</span>, character<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">None</span>):
+    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">len</span>(needle) <span style="color: #666666">&lt;</span> <span style="color: #666666">1</span>:
+        <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #CB3F38; font-weight: bold">ValueError</span>
+    <span style="color: #008000; font-weight: bold">if</span> mode <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #AA22FF; font-weight: bold">in</span> [<span style="color: #BA2121">&quot;remove&quot;</span>, <span style="color: #BA2121">&quot;replace&quot;</span>]:
+        <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #CB3F38; font-weight: bold">NameError</span>
+    <span style="color: #008000; font-weight: bold">if</span> mode <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;replace&quot;</span> <span style="color: #AA22FF; font-weight: bold">and</span> character <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #008000; font-weight: bold">None</span>:
+        <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #CB3F38; font-weight: bold">TypeError</span>
+    <span style="color: #008000; font-weight: bold">if</span> mode <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;replace&quot;</span>:
+        <span style="color: #008000; font-weight: bold">return</span> string<span style="color: #666666">.</span>replace(needle, character)
+    <span style="color: #008000; font-weight: bold">if</span> mode <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;remove&quot;</span>:
+        <span style="color: #008000; font-weight: bold">return</span> string<span style="color: #666666">.</span>replace(needle, <span style="color: #BA2121">&quot;&quot;</span>)
+
+<span style="color: #3D7B7B; font-style: italic"># examples of how process can be used:</span>
+<span style="color: #008000">print</span>( process(<span style="color: #BA2121">&quot;abcd_abcd&quot;</span>, <span style="color: #BA2121">&quot;b&quot;</span>, <span style="color: #BA2121">&quot;remove&quot;</span>) )       <span style="color: #3D7B7B; font-style: italic"># acd_acd</span>
+<span style="color: #008000">print</span>( process(<span style="color: #BA2121">&quot;abcd_abcd&quot;</span>, <span style="color: #BA2121">&quot;b&quot;</span>, <span style="color: #BA2121">&quot;replace&quot;</span>, <span style="color: #BA2121">&quot;*&quot;</span>) ) <span style="color: #3D7B7B; font-style: italic"># a*cd_a*cd</span>
+
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">unittest</span> <span style="color: #008000; font-weight: bold">import</span> TestCase
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Tests</span>(TestCase):
+    <span style="color: #008000; font-weight: bold">pass</span> <span style="color: #3D7B7B; font-style: italic"># implement here</span>
+</pre></div>
+
+<p>No examples are provided for this task</p>
+<h4>Your submission:</h4>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">unittest</span> <span style="color: #008000; font-weight: bold">import</span> TestCase
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Tests</span>(TestCase):
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_needle_to_short</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">with</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>assertRaises(<span style="color: #CB3F38; font-weight: bold">ValueError</span>):
+            process(<span style="color: #BA2121">&quot;abcd&quot;</span>, [])
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_wrong_mode</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">with</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>assertRaises(<span style="color: #CB3F38; font-weight: bold">NameError</span>):
+            process(<span style="color: #BA2121">&quot;abcd&quot;</span>, <span style="color: #BA2121">&quot;b&quot;</span>, <span style="color: #BA2121">&quot;adjust&quot;</span>)
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_type_error</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">with</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>assertRaises(<span style="color: #CB3F38; font-weight: bold">TypeError</span>):
+            process(<span style="color: #BA2121">&quot;abcd&quot;</span>, <span style="color: #BA2121">&quot;b&quot;</span>, <span style="color: #BA2121">&quot;replace&quot;</span>)
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_replace</span>(<span style="color: #008000">self</span>):
+        actual <span style="color: #666666">=</span> process(<span style="color: #BA2121">&quot;abcd&quot;</span>, <span style="color: #BA2121">&quot;b&quot;</span>, <span style="color: #BA2121">&quot;replace&quot;</span>, <span style="color: #BA2121">&quot;*&quot;</span>)
+        expected <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;abcd&quot;</span><span style="color: #666666">.</span>replace(<span style="color: #BA2121">&quot;b&quot;</span>, <span style="color: #BA2121">&quot;*&quot;</span>)
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>assertEqual(actual, expected)
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">test_remove</span>(<span style="color: #008000">self</span>):
+        actual <span style="color: #666666">=</span> process(<span style="color: #BA2121">&quot;abcd_abcd&quot;</span>, <span style="color: #BA2121">&quot;b&quot;</span>, <span style="color: #BA2121">&quot;remove&quot;</span>)
+        expected <span style="color: #666666">=</span> <span style="color: #BA2121">&quot;abcd_abcd&quot;</span><span style="color: #666666">.</span>replace(<span style="color: #BA2121">&quot;b&quot;</span>, <span style="color: #BA2121">&quot;&quot;</span>)
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>assertEqual(actual, expected)
+        
+</pre></div>
+
+<h4>Test results:</h4><ul><li>All tests pass for a correct implementation ... ok</li><li>Finds bug where 'remove' mode doesn't work properly ... ok</li><li>Finds bug where 'replace' mode doesn't work properly ... ok</li><li>Finds bug where NameError is not raised if mode is invalid ... ok</li><li>Finds bug where TypeError is not raised if fourth argument is None in 'replace' mode ... ok</li><li>Finds bug where ValueError is not raised if second argument is empty ... ok</li><li>Targets bug where NameError is not raised if mode is invalid ... ok</li><li>Targets bug where TypeError is not raised if fourth argument is None in 'replace' mode ... ok</li><li>Targets bug where ValueError is not raised if second argument is empty ... ok</li><li>Targets bugs where 'replace' or 'remove' mode doesn't work properly ... ok</li></ul><h4>Submission score: 15.0 / 15</h4><br><hr><br><h2>Programming</h2>
+<p>You are given a class <code>Canvas</code> which represents a rectangular drawing area. Read the source code and comments provided in the code template to understand how.</p>
+<p>Then, implement the <code>draw</code> method, which essentially moves a "pencil" across the canvas, drawing a sequence of adjacent pixels one by one.</p>
+<p><code>draw</code> takes four parameters:</p>
+<ul>
+<li><code>x</code> a starting x (horizontal) coordinate</li>
+<li><code>y</code> a starting y (vertical) coordinate</li>
+<li><code>path</code> a string containing a sequence of up (<code>"u"</code>), down (<code>"d"</code>), left (<code>"l"</code>), and right (<code>"r"</code>)  movements represented by the given characters (<code>""</code> by default)</li>
+<li><code>char</code> a single character used to paint on the canvas (<code>"█"</code> by default)</li>
+</ul>
+<p><code>draw</code> first places the "pencil" at the provided <code>x</code>/<code>y</code> coordinates and draws <code>char</code> at that location. Then, it goes through the movement instructions one by one to update the pencil coordinates. Thus, if <code>path</code> is the empty string, only a single pixel is drawn (at the <code>x</code>/<code>y</code> coordinates). In the general case, <code>len(path)+1</code> pixels are drawn. The top-left-most pixel is at coordinates <code>0</code>/<code>0</code>.</p>
+<p>With regard to possible arguments to <code>draw</code>, <code>draw</code> should be generous in what it accepts. It should...</p>
+<ul>
+<li>...not care about casing ("d" vs. "D") in the <code>path</code> string</li>
+<li>...silently ignore <code>path</code> characters which are not valid movement instructions, rather than fail</li>
+<li>...wrap around the edges of the canvas if the pencil is placed or moved out of bounds, rather than fail</li>
+<li>...allow over-writing pixels multiple times</li>
+</ul>
+<p>On the other hand, <code>draw</code> should raise an <code>Exception</code> if...</p>
+<ul>
+<li>...<code>x</code> or <code>y</code> is not an integer</li>
+<li>...<code>path</code> is not a string</li>
+<li>...<code>char</code> is not a string or has any length other than <code>1</code></li>
+</ul>
+<p>You must implement <code>draw</code>. You may add additional methods to the class if you want; but you don't have to.</p>
+<p><strong>Important</strong>: Do <strong>not</strong> modify the already implementated methods of <code>Canvas</code>!</p>
+<p><strong>Important</strong>: Do <strong>not</strong> add any additional top-level definitions (except for imports, if you need any). Your solution must be contained entirely inside <code>Canvas</code>!</p>
+<p><strong>Important</strong>: Do <strong>not</strong> modify the signature already provided for <code>draw</code>!</p>
+<p><strong>Important</strong>: Hand in your <strong>entire</strong> class definition, including the signature and the methods provided in the template! In case you need any imports, include them, too.</p>
+<p>Use the following template:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #3D7B7B; font-style: italic">#!/usr/bin/env</span>
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Canvas</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, width, height):
+        <span style="color: #3D7B7B; font-style: italic"># A canvas consists of *height* number of rows, so for example,</span>
+        <span style="color: #3D7B7B; font-style: italic"># ... self.rows[0][0] refers to the top-left pixel</span>
+        <span style="color: #3D7B7B; font-style: italic"># ... self.rows[3][5] refers to the 6th pixel on the fourth row</span>
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>rows <span style="color: #666666">=</span> []
+        <span style="color: #008000; font-weight: bold">for</span> row <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">range</span>(height):
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>rows<span style="color: #666666">.</span>append([<span style="color: #BA2121">&quot; &quot;</span>] <span style="color: #666666">*</span> width)
+        <span style="color: #3D7B7B; font-style: italic"># print(self.rows) given width=5 and height=2 would show:</span>
+        <span style="color: #3D7B7B; font-style: italic"># [[&#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;], [&#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;]]</span>
+        <span style="color: #3D7B7B; font-style: italic"># and __str__ would return:</span>
+        <span style="color: #3D7B7B; font-style: italic">#  -----</span>
+        <span style="color: #3D7B7B; font-style: italic"># |     |</span>
+        <span style="color: #3D7B7B; font-style: italic"># |     |</span>
+        <span style="color: #3D7B7B; font-style: italic">#  -----</span>
+        <span style="color: #3D7B7B; font-style: italic"># showing a canvas with two rows and 5 pixels in each row.</span>
+        <span style="color: #3D7B7B; font-style: italic"># the border added by __str__ is decorative and not part of the canvas</span>
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__str__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #3D7B7B; font-style: italic"># returns the canvas surrounded by a border</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #BA2121">&quot; &quot;</span> <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;-&quot;</span> <span style="color: #666666">*</span> <span style="color: #008000">len</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>rows[<span style="color: #666666">0</span>]) <span style="color: #666666">+</span> <span style="color: #BA2121">&quot; </span><span style="color: #AA5D1F; font-weight: bold">\n</span><span style="color: #BA2121">|&quot;</span> <span style="color: #666666">+</span> \
+               <span style="color: #BA2121">&quot;|</span><span style="color: #AA5D1F; font-weight: bold">\n</span><span style="color: #BA2121">|&quot;</span><span style="color: #666666">.</span>join(<span style="color: #BA2121">&#39;&#39;</span><span style="color: #666666">.</span>join(row) <span style="color: #008000; font-weight: bold">for</span> row <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>rows) <span style="color: #666666">+</span> \
+               <span style="color: #BA2121">&quot;|</span><span style="color: #AA5D1F; font-weight: bold">\n</span><span style="color: #BA2121"> &quot;</span> <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;-&quot;</span> <span style="color: #666666">*</span> <span style="color: #008000">len</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>rows[<span style="color: #666666">0</span>]) <span style="color: #666666">+</span> <span style="color: #BA2121">&quot; &quot;</span>
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">draw</span>(<span style="color: #008000">self</span>, x, y, path<span style="color: #666666">=</span><span style="color: #BA2121">&quot;&quot;</span>, char<span style="color: #666666">=</span><span style="color: #BA2121">&quot;█&quot;</span>):
+        <span style="color: #3D7B7B; font-style: italic"># implement this method</span>
+        <span style="color: #008000; font-weight: bold">pass</span>
+</pre></div>
+
+<p>The following example illustrates how the solution function may be called:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>c <span style="color: #666666">=</span> Canvas(<span style="color: #666666">10</span>, <span style="color: #666666">6</span>)
+c<span style="color: #666666">.</span>draw(<span style="color: #666666">0</span>, <span style="color: #666666">0</span>, <span style="color: #BA2121">&quot;rdr&quot;</span>, <span style="color: #BA2121">&quot;+&quot;</span>)
+<span style="color: #008000">print</span>(c)
+<span style="color: #3D7B7B; font-style: italic"># ignore non-movement characters; the following path is equivalent to &quot;rd&quot;</span>
+<span style="color: #3D7B7B; font-style: italic"># overwrites three of the + signs drawn before</span>
+c<span style="color: #666666">.</span>draw(<span style="color: #666666">0</span>, <span style="color: #666666">0</span>, <span style="color: #BA2121">&quot;weird!&quot;</span>)
+<span style="color: #3D7B7B; font-style: italic"># draw U shape in the top-right corner</span>
+c<span style="color: #666666">.</span>draw(<span style="color: #666666">7</span>, <span style="color: #666666">0</span>)
+c<span style="color: #666666">.</span>draw(<span style="color: #666666">9</span>, <span style="color: #666666">0</span>)
+c<span style="color: #666666">.</span>draw(<span style="color: #666666">9</span>, <span style="color: #666666">1</span>, <span style="color: #BA2121">&quot;ll&quot;</span>)
+<span style="color: #008000">print</span>(c)
+<span style="color: #3D7B7B; font-style: italic"># start in bottom right corner and wrap around the right border</span>
+c<span style="color: #666666">.</span>draw(<span style="color: #666666">9</span>, <span style="color: #666666">5</span>, <span style="color: #BA2121">&quot;RRUR&quot;</span>, <span style="color: #BA2121">&quot;&gt;&quot;</span>)
+<span style="color: #3D7B7B; font-style: italic"># wrap around the left border</span>
+c<span style="color: #666666">.</span>draw(<span style="color: #666666">2</span>, <span style="color: #666666">3</span>, <span style="color: #BA2121">&quot;LLLLL&quot;</span>, <span style="color: #BA2121">&quot;&lt;&quot;</span>)
+<span style="color: #3D7B7B; font-style: italic"># starting coordinates can also wrap around: (25, 25) is the same as (5, 1)</span>
+c<span style="color: #666666">.</span>draw(<span style="color: #666666">25</span>, <span style="color: #666666">25</span>, <span style="color: #BA2121">&quot;uu&quot;</span>, <span style="color: #BA2121">&quot;^&quot;</span>)
+<span style="color: #008000">print</span>(c)
+</pre></div>
+
+<p>The calls above should produce the following output:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span> ---------- 
+|++        |
+| ++       |
+|          |
+|          |
+|          |
+|          |
+ ---------- 
+ ---------- 
+|██     █ █|
+| █+    ███|
+|          |
+|          |
+|          |
+|          |
+ ---------- 
+ ---------- 
+|██   ^ █ █|
+| █+  ^ ███|
+|          |
+|&lt;&lt;&lt;    &lt;&lt;&lt;|
+| &gt;&gt;       |
+|&gt;&gt;   ^   &gt;|
+ ---------- 
+</pre></div>
+
+<h4>Your submission:</h4>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Canvas</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, width, height):
+        <span style="color: #3D7B7B; font-style: italic"># A canvas consists of *height* number of rows, so for example,</span>
+        <span style="color: #3D7B7B; font-style: italic"># ... self.rows[0][0] refers to the top-left pixel</span>
+        <span style="color: #3D7B7B; font-style: italic"># ... self.rows[3][5] refers to the 6th pixel on the fourth row</span>
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>rows <span style="color: #666666">=</span> []
+        <span style="color: #008000; font-weight: bold">for</span> row <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">range</span>(height):
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>rows<span style="color: #666666">.</span>append([<span style="color: #BA2121">&quot; &quot;</span>] <span style="color: #666666">*</span> width)
+        <span style="color: #3D7B7B; font-style: italic"># print(self.rows) given width=5 and height=2 would show:</span>
+        <span style="color: #3D7B7B; font-style: italic"># [[&#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;], [&#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;, &#39; &#39;]]</span>
+        <span style="color: #3D7B7B; font-style: italic"># and __str__ would return:</span>
+        <span style="color: #3D7B7B; font-style: italic">#  -----</span>
+        <span style="color: #3D7B7B; font-style: italic"># |     |</span>
+        <span style="color: #3D7B7B; font-style: italic"># |     |</span>
+        <span style="color: #3D7B7B; font-style: italic">#  -----</span>
+        <span style="color: #3D7B7B; font-style: italic"># showing a canvas with two rows and 5 pixels in each row.</span>
+        <span style="color: #3D7B7B; font-style: italic"># the border added by __str__ is decorative and not part of the canvas</span>
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__str__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #3D7B7B; font-style: italic"># returns the canvas surrounded by a border</span>
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #BA2121">&quot; &quot;</span> <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;-&quot;</span> <span style="color: #666666">*</span> <span style="color: #008000">len</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>rows[<span style="color: #666666">0</span>]) <span style="color: #666666">+</span> <span style="color: #BA2121">&quot; </span><span style="color: #AA5D1F; font-weight: bold">\n</span><span style="color: #BA2121">|&quot;</span> <span style="color: #666666">+</span> \
+               <span style="color: #BA2121">&quot;|</span><span style="color: #AA5D1F; font-weight: bold">\n</span><span style="color: #BA2121">|&quot;</span><span style="color: #666666">.</span>join(<span style="color: #BA2121">&#39;&#39;</span><span style="color: #666666">.</span>join(row) <span style="color: #008000; font-weight: bold">for</span> row <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>rows) <span style="color: #666666">+</span> \
+               <span style="color: #BA2121">&quot;|</span><span style="color: #AA5D1F; font-weight: bold">\n</span><span style="color: #BA2121"> &quot;</span> <span style="color: #666666">+</span> <span style="color: #BA2121">&quot;-&quot;</span> <span style="color: #666666">*</span> <span style="color: #008000">len</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>rows[<span style="color: #666666">0</span>]) <span style="color: #666666">+</span> <span style="color: #BA2121">&quot; &quot;</span>
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">draw</span>(<span style="color: #008000">self</span>, x, y, path<span style="color: #666666">=</span><span style="color: #BA2121">&quot;&quot;</span>, char<span style="color: #666666">=</span><span style="color: #BA2121">&quot;█&quot;</span>):
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">isinstance</span>(x, <span style="color: #008000">int</span>):
+            <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #CB3F38; font-weight: bold">Exception</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">isinstance</span>(y, <span style="color: #008000">int</span>):
+            <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #CB3F38; font-weight: bold">Exception</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">isinstance</span>(path, <span style="color: #008000">str</span>):
+            <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #CB3F38; font-weight: bold">Exception</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">isinstance</span>(char, <span style="color: #008000">str</span>):
+            <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #CB3F38; font-weight: bold">Exception</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">len</span>(char) <span style="color: #666666">&gt;</span> <span style="color: #666666">1</span>:
+            <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #CB3F38; font-weight: bold">Exception</span>
+        h <span style="color: #666666">=</span> <span style="color: #008000">len</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>rows)
+        w <span style="color: #666666">=</span> <span style="color: #008000">len</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>rows[<span style="color: #666666">0</span>])
+        <span style="color: #008000; font-weight: bold">try</span>:
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>rows[x][y] <span style="color: #666666">=</span> char
+        <span style="color: #008000; font-weight: bold">except</span>:
+            <span style="color: #008000; font-weight: bold">pass</span>
+        pattern <span style="color: #666666">=</span> [v<span style="color: #666666">.</span>lower() <span style="color: #008000; font-weight: bold">for</span> v <span style="color: #AA22FF; font-weight: bold">in</span> path]
+        <span style="color: #008000; font-weight: bold">for</span> p <span style="color: #AA22FF; font-weight: bold">in</span> pattern:
+            <span style="color: #008000; font-weight: bold">if</span> p <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;u&quot;</span>:
+                x <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
+                <span style="color: #008000; font-weight: bold">try</span>:
+                    <span style="color: #008000">self</span><span style="color: #666666">.</span>rows[x][y] <span style="color: #666666">=</span> char
+                <span style="color: #008000; font-weight: bold">except</span>:
+                    <span style="color: #008000; font-weight: bold">pass</span>
+            <span style="color: #008000; font-weight: bold">if</span> p <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;d&quot;</span>:
+                x <span style="color: #666666">-=</span> <span style="color: #666666">1</span>
+                <span style="color: #008000; font-weight: bold">try</span>:
+                    <span style="color: #008000">self</span><span style="color: #666666">.</span>rows[x][y] <span style="color: #666666">=</span> char
+                <span style="color: #008000; font-weight: bold">except</span>:
+                    <span style="color: #008000; font-weight: bold">pass</span>
+            <span style="color: #008000; font-weight: bold">if</span> p <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;l&quot;</span>:
+                y <span style="color: #666666">-=</span> <span style="color: #666666">1</span>
+                <span style="color: #008000; font-weight: bold">try</span>:
+                    <span style="color: #008000">self</span><span style="color: #666666">.</span>rows[x][y] <span style="color: #666666">=</span> char
+                <span style="color: #008000; font-weight: bold">except</span>:
+                    <span style="color: #008000; font-weight: bold">pass</span>
+            <span style="color: #008000; font-weight: bold">if</span> p <span style="color: #666666">==</span> <span style="color: #BA2121">&quot;r&quot;</span>:
+                y <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
+                <span style="color: #008000; font-weight: bold">try</span>:
+                    <span style="color: #008000">self</span><span style="color: #666666">.</span>rows[x][y] <span style="color: #666666">=</span> char
+                <span style="color: #008000; font-weight: bold">except</span>:
+                    <span style="color: #008000; font-weight: bold">pass</span>
+                
+</pre></div>
+
+<h4>Test results:</h4><ul><li>Drawing a single pixel using the default char works ... ok</li><li>Drawing down works ... FAIL</li><li>Drawing left works ... ok</li><li>Drawing multiple paths (including out-of-bounds) works ... FAIL</li><li>Drawing right works ... ok</li><li>Drawing up once or multiple times works ... FAIL</li><li>Invalid path type raises Exception ... ok</li><li>Invalid x type raises Exception ... ok</li><li>Invalid y type raises Exception ... ok</li><li>Overwriting works ... ok</li><li>Wrapping around the bottom border works ... ok</li><li>Wrapping around the left border works ... ok</li><li>Wrapping around the right border works ... FAIL</li><li>Wrapping around the top border works ... FAIL</li><li>char not exactly one character long raises Exception ... ok</li></ul><h4>Submission score: 10 / 15</h4><br><hr><br><h2>Inheritance</h2>
+<p><em>Important: read the problem description, implementation notes and provided examples carefully for a comprehensive specification. All three parts are relevant for understanding the requirements! Also, make sure you do not run out of time to submit your solution!</em></p>
+<h2>Problem description</h2>
+<p>You are working for a restaurant chain and are asked to implement the salary accounting software for their chain of restaurants and staff.</p>
+<p>The chain runs several restaurants, each of which has a name.</p>
+<p>The chain employs different kinds of staff, but regardless of type, any staff works for a specific restaurant and has a unique employee number (<code>101</code> for the first employee, <code>102</code> for the second, and so on). Furthermore, each staff holds a record of all shifts worked in the past. When a shift is worked, the number of hours is added to the shift record. Each staff also provides a way to determine the total salary earned by the staff, which is calculated depending on the type of staff.</p>
+<p>A cook receives the same salary, no matter how many hours are worked. A server receives a base salary plus an hourly salary for each hour worked. For dish washers, the salary is computed the same way as for servers, but with a 10% deduction.</p>
+<h2>Additional implementation instructions:</h2>
+<ul>
+<li>Fill in the missing class implementations in the provided template. Do <strong>not</strong> add any other top-level definitions.</li>
+<li>Your classes <em>must</em> be compatible with the provided examples. Make sure their members are named appropriately.</li>
+<li>You must minimize code duplication! Call super-methods where possible to re-use functionality implemented in super-classes.</li>
+<li>Do <strong>not</strong> include any example calls in your submission. Submit only top-level class definitions and imports.</li>
+</ul>
+<p>Use the following template:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">abc</span> <span style="color: #008000; font-weight: bold">import</span> ABC, abstractmethod
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Restaurant</span>:
+    <span style="color: #008000; font-weight: bold">pass</span>
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Staff</span>:
+    <span style="color: #008000; font-weight: bold">pass</span>
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Server</span>:
+    <span style="color: #008000; font-weight: bold">pass</span>
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Dishwasher</span>:
+    <span style="color: #008000; font-weight: bold">pass</span>
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Cook</span>:
+    <span style="color: #008000; font-weight: bold">pass</span>
+</pre></div>
+
+<p>The following example illustrates how the solution function may be called:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>restaurant <span style="color: #666666">=</span> Restaurant(<span style="color: #BA2121">&quot;Mc Ronalds&quot;</span>)
+
+cook <span style="color: #666666">=</span> Cook(restaurant, <span style="color: #666666">3200</span>)
+cook<span style="color: #666666">.</span>work(<span style="color: #666666">10</span>)
+cook<span style="color: #666666">.</span>work(<span style="color: #666666">50</span>)
+<span style="color: #008000">print</span>(cook<span style="color: #666666">.</span>number)
+<span style="color: #008000">print</span>(cook<span style="color: #666666">.</span>shifts)
+<span style="color: #008000">print</span>(<span style="color: #008000">type</span>(cook<span style="color: #666666">.</span>shifts))
+<span style="color: #008000">print</span>(cook<span style="color: #666666">.</span>salary())
+<span style="color: #008000">print</span>(cook)
+
+server <span style="color: #666666">=</span> Server(restaurant, <span style="color: #666666">100</span>, <span style="color: #666666">9.50</span>)
+server<span style="color: #666666">.</span>work(<span style="color: #666666">10</span>)
+server<span style="color: #666666">.</span>work(<span style="color: #666666">50</span>)
+<span style="color: #008000">print</span>(server<span style="color: #666666">.</span>number)
+<span style="color: #008000">print</span>(server<span style="color: #666666">.</span>shifts)
+<span style="color: #008000">print</span>(server<span style="color: #666666">.</span>salary()) <span style="color: #3D7B7B; font-style: italic"># (100 + 60*9.50)</span>
+
+washer <span style="color: #666666">=</span> Dishwasher(restaurant, <span style="color: #666666">100</span>, <span style="color: #666666">9.50</span>)
+washer<span style="color: #666666">.</span>work(<span style="color: #666666">10</span>)
+washer<span style="color: #666666">.</span>work(<span style="color: #666666">50</span>)
+<span style="color: #008000">print</span>(washer<span style="color: #666666">.</span>number)
+<span style="color: #008000">print</span>(washer<span style="color: #666666">.</span>shifts)
+<span style="color: #008000">print</span>(washer<span style="color: #666666">.</span>salary()) <span style="color: #3D7B7B; font-style: italic"># (100 + 60*9.50) * 0.9</span>
+</pre></div>
+
+<p>The calls above should produce the following output:</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span>101
+[10, 50]
+&lt;class &#39;list&#39;&gt;
+3200
+Staff working for Mc Ronalds with salary 3200
+102
+[10, 50]
+670.0
+103
+[10, 50]
+603.0
+</pre></div>
+
+<h4>Your submission:</h4>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">abc</span> <span style="color: #008000; font-weight: bold">import</span> ABC, abstractmethod
+
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Restaurant</span>:
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, name):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>name <span style="color: #666666">=</span> name
+
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Staff</span>(ABC):
+    seq <span style="color: #666666">=</span> <span style="color: #666666">101</span>
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, rest, base_salary):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>number <span style="color: #666666">=</span> Staff<span style="color: #666666">.</span>seq
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>restaurant <span style="color: #666666">=</span> rest<span style="color: #666666">.</span>name
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>shifts <span style="color: #666666">=</span> []
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>base_salary <span style="color: #666666">=</span> base_salary
+        Staff<span style="color: #666666">.</span>seq <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">work</span>(<span style="color: #008000">self</span>, hours):
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>shifts<span style="color: #666666">.</span>append(hours)
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__repr__</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #BA2121">&quot;Staff working for &quot;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>restaurant) <span style="color: #666666">+</span> <span style="color: #BA2121">&quot; with salary &quot;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>salary())
+
+    <span style="color: #AA22FF">@abstractmethod</span>
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">salary</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">pass</span>
+
+
+
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Server</span>(Staff):
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, rest, base_salary, hourly_salary):
+        <span style="color: #008000">super</span>()<span style="color: #666666">.</span><span style="color: #0000FF">__init__</span>(rest, base_salary)
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>hourly_salary <span style="color: #666666">=</span> hourly_salary
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">salary</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>base_salary <span style="color: #666666">+</span> <span style="color: #008000">sum</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>shifts)<span style="color: #666666">*</span><span style="color: #008000">self</span><span style="color: #666666">.</span>hourly_salary
+
+
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Dishwasher</span>(Staff):
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, rest, base_salary, hourly_salary):
+        <span style="color: #008000">super</span>()<span style="color: #666666">.</span><span style="color: #0000FF">__init__</span>(rest, base_salary)
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>hourly_salary <span style="color: #666666">=</span> hourly_salary
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">salary</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">return</span> (<span style="color: #008000">self</span><span style="color: #666666">.</span>base_salary <span style="color: #666666">+</span> <span style="color: #008000">sum</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>shifts)<span style="color: #666666">*</span><span style="color: #008000">self</span><span style="color: #666666">.</span>hourly_salary)<span style="color: #666666">*0.9</span>
+
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">Cook</span>(Staff):
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, rest, base_salary):
+        <span style="color: #008000">super</span>()<span style="color: #666666">.</span><span style="color: #0000FF">__init__</span>(rest, base_salary)
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">salary</span>(<span style="color: #008000">self</span>):
+        <span style="color: #008000; font-weight: bold">return</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>base_salary
+</pre></div>
+
+<h4>Test results:</h4><ul><li>All Staff shifts are recorded correctly and retrievable via the shifts attribute ... ok</li><li>Cook inherits Staff ... ok</li><li>Cook salary returns correct amount ... ok</li><li>Dishwasher inherits Server ... FAIL</li><li>Dishwasher salary calls super().salary ... FAIL</li><li>Dishwasher salary returns correct amount ... ok</li><li>New Servers, Dishwashers and Cooks have numbers incrementing from 101 ... FAIL</li><li>Restaurant can be instantiated ... ok</li><li>Server and Cook constructors call super constructor ... ok</li><li>Server inherits Staff ... ok</li><li>Server salary returns correct amount ... ok</li><li>Server, Dishwasher and Cook can be instantiated as expected ... ok</li><li>Staff (and only Staff) implements __str__ ... FAIL</li><li>Staff has an integer class attribute ... ok</li><li>Staff has exactly one abstract method called salaray ... ok</li><li>Staff implements work ... ok</li><li>Staff inherits ABC ... ok</li><li>Staff is abstract ... ok</li><li>__str__ works correctly for all staffs ... ok</li></ul><h4>Submission score: 15 / 19</h4></body></html>

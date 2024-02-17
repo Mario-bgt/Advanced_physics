@@ -1,0 +1,32 @@
+classes 2
+-F
+-F
+-F
+-T
+
+exceptions 2
+-T
+-T
+-F
+-F
+
+git 2
+-F
+-T
+-F
+-T
+
+
+inhertiance 3
+- T
+- F
+- F
+- T
+
+
+testing 1
+-F
+-F
+-F
+-F
+
