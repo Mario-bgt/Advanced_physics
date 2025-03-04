@@ -1,26 +1,42 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Constants
-m = 1  # mass (arbitrary units)
-omega = 2  # angular frequency (arbitrary units)
-E = 1  # total energy (arbitrary units)
+# Constants (SI units, simplified for sketch)
+e = 1.602e-19  # Elementary charge
+epsilon_0 = 8.854e-12  # Vacuum permittivity
+hbar = 1.055e-34  # Reduced Planck's constant
+m = 9.109e-31  # Electron mass
+l = 1  # Angular momentum quantum number
 
-# Calculate the maximum values of p and q
-q_max = np.sqrt(2 * E / (m * omega**2))
-p_max = np.sqrt(2 * m * E)
+# Effective potential function (simplified, units normalized)
+def V_eff(r, l, Z=1):
+    """Effective potential for hydrogen atom."""
+    coulomb_term = -Z * e**2 / (4 * np.pi * epsilon_0 * r)
+    centrifugal_term = (hbar**2 * l * (l + 1)) / (2 * m * r**2)
+    return coulomb_term + centrifugal_term
 
-# Parametric equation for an ellipse in the p-q plane
-theta = np.linspace(0, 2 * np.pi, 100)
-q_vals = q_max * np.cos(theta)
-p_vals = p_max * np.sin(theta)
+# Radial range for plot
+r = np.linspace(0.01e-10, 5e-10, 500)  # Avoid r=0 to prevent singularity
 
-# Plot the phase space diagram
-plt.figure(figsize=(10, 6))
-plt.plot(q_vals, p_vals, label='Energy Ellipse (Phase Space)')
-plt.xlabel('Position (q) arb. units', fontsize=12)
-plt.ylabel('Momentum (p) arb. units', fontsize=12)
-plt.title('Phase Space Diagram of a Harmonic Oscillator', fontsize=14)
+# Energy of the bound state (example E < 0)
+E = -0.8e-18  # Approximate energy of hydrogen bound state
+
+# Compute V_eff values
+V = V_eff(r, l)
+
+
+
+# Plotting
+plt.figure(figsize=(8, 6))
+plt.plot(r, V, label=r"$V_{\mathrm{eff}}(r)$", color="blue")
+plt.axhline(E, color="red", linestyle="--", label=r"Energy $E$")
+
+
+plt.title("Effective Potential $V_{\mathrm{eff}}(r)$ for $l=1$")
+plt.xlabel("Radial Distance $r$ (m)")
+plt.ylabel("Potential Energy (J)")
+plt.ylim(-5e-18, 5e-18)
 plt.legend()
-plt.savefig('harmonic_oscillator_phase_space.png')
+plt.grid()
+plt.savefig("effective_potential.png")
 plt.show()
