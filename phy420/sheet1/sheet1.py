@@ -1,14 +1,11 @@
-from cProfile import label
-
 import numpy as np
 import matplotlib.pyplot as plt
 
-from fuer_silvan.Midtermhs22.loops import product
 
 # Constants
 k_B = 8.617e-5  # Boltzmann constant in eV/K
 
-E = np.linspace(0, 7, 1000)
+E = np.linspace(4, 12, 1000)
 
 # Fermi-Dirac distribution function
 def fermi_dirac(E, E_F, T):
@@ -20,7 +17,9 @@ temperatures = [0, 500, 1000, 2000]
 # Work functions
 wf_LaB6 = 2.40   # Average value in eV https://doi.org/10.1016/j.vacuum.2017.06.029
 ef_LaB6 = 2.68    # Approximate value in eV https://doi.org/10.1016/j.vacuum.2017.06.029
-wf_W_Ir = 4.5  # Approximate value in eV
+wf_W_Ir = 4.5  # Approximate value in eV https://www.researchgate.net/publication/24169123_Simulation_of_attosecond_streaking_of_electrons_emitted_from_a_tungsten_surface
+ef_W_Ir = 9.6  # Approximate value in eV https://www.researchgate.net/publication/24169123_Simulation_of_attosecond_streaking_of_electrons_emitted_from_a_tungsten_surface
+
 
 # Plot for lanthanum hexaborides
 plt.figure(figsize=(10, 6))
@@ -45,13 +44,38 @@ ax_inset.set_ylim(0.5, 1.1)
 ax_inset.set_title('Zoomed-In View')
 ax_inset.axvline(wf_LaB6, color='r', linestyle='--')
 
-
-plt.savefig('fermi_dirac.png')
-plt.show()
+plt.savefig('fermi_dirac_la.png')
+# plt.show()
+plt.clf()
 
 
 # Plot for tungsten-iridium
+plt.figure(figsize=(10, 6))
+for T in temperatures:
+    f = fermi_dirac(E, ef_W_Ir, T)
+    plt.plot(E, f, label=f'T = {T} K')
 
+plt.axvline(wf_W_Ir, color='r', linestyle='--', label='W-Ir Work Function (4.50 eV)')
+plt.xlabel('Energy (eV)')
+plt.ylabel('Fermi-Dirac Distribution')
+plt.title('Fermi-Dirac Distribution Ir-doped Tungsten')
+plt.legend(loc = "lower left")
+plt.grid(True)
+
+# Zoomed-in inset around work functions
+ax_inset = plt.axes([0.25, 0.35, 0.35, 0.35])
+for T in temperatures:
+    f = fermi_dirac(E, ef_W_Ir, T)
+    ax_inset.plot(E, f, label=f'T = {T} K')
+ax_inset.set_xlim(4.3, 4.7)
+ax_inset.set_ylim(0.5, 1.1)
+ax_inset.set_title('Zoomed-In View')
+ax_inset.axvline(wf_W_Ir, color='r', linestyle='--')
+
+
+plt.savefig('fermi_dirac_w.png')
+# plt.show()
+plt.clf()
 
 # number of thermoelectrons
 def thermoelectrons(w, T):
@@ -92,7 +116,8 @@ plt.grid(True)
 
 plt.tight_layout()
 plt.savefig('thermoelectrons.png')
-plt.show()
+# plt.show()
+plt.clf()
 
 def surface_transmission(E, w):
     u = 4*np.sqrt(E*(E-w))
@@ -106,7 +131,7 @@ plt.ylabel('Transmission')
 plt.title('Surface Transmission vs. Energy')
 plt.grid(True)
 plt.savefig('surface_transmission.png')
-plt.show()
+# plt.show()
 
 plt.clf()
 # extra plot with fermi-dirac distribution
@@ -121,4 +146,23 @@ plt.xlabel('Energy (eV)')
 plt.ylabel('Transmission')
 plt.title('Surface Transmission vs. Energy at 2000 K')
 plt.savefig('surface_transmission_extra.png')
-plt.show()
+# plt.show()
+plt.clf()
+
+def angle(E):
+    m = 9.11e-31
+    hbar = 1.05e-34
+    ev = 1.6e-19
+    upper = np.sqrt(2*m*E*ev)
+    lower = hbar*2.91e-10
+    return np.arcsin(upper/lower)
+
+energy = np.linspace(10, 500, 1000)
+plt.plot(energy, angle(energy))
+plt.xlabel('Energy (eV)')
+plt.ylabel('Angle')
+plt.title('Angle vs. Energy')
+plt.grid(True)
+plt.savefig('angle.png')
+# plt.show()
+plt.clf()
