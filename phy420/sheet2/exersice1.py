@@ -1,38 +1,57 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Define parameters
-d = 2.0  # Thickness of As layer in nm
-lambda_Si = 2.45  # IMFP of Si 2p electrons in nm
-theta_range = np.linspace(0, 80, 100)  # Emission angles in degrees
 
-# Convert theta to radians
-theta_rad = np.radians(theta_range)
+def intensity(theta):
+    alpha = 90 - 54.7 + theta
+    d = 400*(10**-9)*np.sin(np.radians(alpha))
+    lamba = 2.45*(10**-9)*np.cos(np.radians(theta))
+    x_i = [0.5*10**-9, 1*10**-9, 1.5*10**-9, 2*10**-9]
+    epxsum = np.sum([np.exp(-x*(1/d + 1/lamba)) for x in x_i])
+    upper = d*lamba
+    lower =  (d + lamba)*epxsum
+    return upper/lower
 
-# Compute the normalized intensity ratio
-I_ratio = np.exp(-d / (lambda_Si * np.cos(theta_rad)))
+thetas = np.linspace(0, 80, 100)
+intensities = intensity(thetas)*9**11
 
-# Plot the results
-plt.figure(figsize=(8, 6))
-plt.plot(theta_range, I_ratio, label=r'$I_{Si}/I_{As}$', linewidth=2)
-plt.xlabel(r'Emission Angle $\theta$ (degrees)')
-plt.ylabel(r'Normalized Intensity $I_{Si} / I_{As}$')
-plt.title('Si 2p Core Level Intensity Normalized to As 3d')
-plt.grid(True)
+plt.plot(thetas, intensities, label='Intensity')
+plt.xlabel('Theta (degrees)')
+plt.ylabel('Intensity (arbitrary units)')
+plt.title('Intensity vs Theta with fixed gamma')
 plt.legend()
+plt.grid(True)
+plt.savefig('intensity_vs_theta.png')
 plt.show()
 
-# Compute the normalized intensity ratio under the new condition (alpha = 9°)
-I_ratio_new = np.exp(-d / (lambda_Si * np.cos(theta_rad)))
 
-# Plot the results
-plt.figure(figsize=(8, 6))
-plt.plot(theta_range, I_ratio, label=r'$I_{Si}/I_{As}$ (α = 0°)', linewidth=2, linestyle='dashed', color='orange')
-plt.plot(theta_range, I_ratio_new, label=r'$I_{Si}/I_{As}$ (α = 9°)', linewidth=2, color='blue')
+def asymmetr_factor(gamma):
+    B_si = 1.21
+    B_Ga = 1.18
+    upper = 1 + (1/2)*B_si*((3/2)*(np.sin(np.radians(gamma)))**2 - 1)
+    lower = 1 + (1/2)*B_Ga*((3/2)*(np.sin(np.radians(gamma)))**2 - 1)
+    return upper/lower
 
-plt.xlabel(r'Emission Angle $\theta$ (degrees)')
-plt.ylabel(r'Normalized Intensity $I_{Si} / I_{As}$')
-plt.title('Comparison of Si 2p Core Level Intensity Normalized to As 3d')
-plt.grid(True)
+
+def intensity2(theta):
+    alpha = 9
+    gamma = 81 + theta
+    asym_fact = asymmetr_factor(gamma)
+    d = 400*(10**-9)*np.sin(np.radians(alpha))
+    lamba = 2.45*(10**-9)*np.cos(np.radians(theta))
+    x_i = [0.5*10**-9, 1*10**-9, 1.5*10**-9, 2*10**-9]
+    epxsum = np.sum([np.exp(-x*(1/d + 1/lamba)) for x in x_i])
+    upper = d*lamba*asym_fact
+    lower =  (d + lamba)*epxsum
+    return upper/lower
+
+intensities2 = intensity2(thetas)*9**11
+plt.plot(thetas, intensities, label='Intensity with gamma fix')
+plt.plot(thetas, intensities2, label='Intensity with alpha fix')
+plt.xlabel('Theta (degrees)')
+plt.ylabel('Intensity (arbitrary units)')
+plt.title('Intensity vs Theta with fixed alpha')
 plt.legend()
+plt.grid(True)
+plt.savefig('intensity_vs_theta2.png')
 plt.show()
