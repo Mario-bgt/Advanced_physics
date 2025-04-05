@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
 import pandas as pd
-from sympy.abc import alpha
 
 # Define data path and file names
 data_path = Path("data/")
