@@ -22,23 +22,23 @@ plt.rcParams.update({
     "ytick.labelsize": 12
 })
 
-
 # Energy and momentum grids
-Eb = np.linspace(-0.2, 0.2, 500)  # Binding energy in eV
+Eb = np.linspace(-0.5, 0.2, 500)  # Binding energy in eV
 k = np.linspace(-0.3, 0.3, 500)  # in 1/Angstrom
+
 
 def self_energy(Eb, lam, Omega0):
     re = (lam * Omega0 / 2) * np.log(np.abs((Omega0 + Eb) / (Omega0 - Eb)))
-    im = (-np.pi * lam * Omega0)/2 * (np.abs(Eb) > Omega0) + eta
+    im = (-np.pi * lam * Omega0) / 2 * (np.abs(Eb) > Omega0) + eta
     return re, im
 
-def fermi_dirac(E, T=temp):
-    return 1 / (1 + np.exp(E / (kb * T)))
 
 def spectral_function(k, Eb, lam, Omega0):
     re, im = self_energy(Eb, lam, Omega0)
-    k_dis = (hbar * k * 1e10)**2 / (2 * m_eff * eV)
-    return (-1/np.pi) * (im / ((Eb - k_dis - re) ** 2 + im ** 2)) * fermi_dirac(Eb)
+    k_dis = (hbar * k * 1e10) ** 2 / (2 * m_eff * eV)
+    e_ferm = 1 / (1 + np.exp(Eb / (kb * temp)))
+    return (1 / np.pi) * (im / ((Eb - k_dis - re) ** 2 + im ** 2)) * e_ferm
+
 
 for lam in [1, 2]:
     e_re, e_im = self_energy(Eb, lam, Omega0)
@@ -66,7 +66,7 @@ for lam in [1, 2]:
     # Spectral function plot
     plt.figure()
     plt.imshow(image_data, aspect='auto', extent=[k.min(), k.max(), Eb.min(), Eb.max()],
-               origin='lower', cmap='hot')
+               origin='lower', cmap='Greys')
     plt.colorbar(label=r"Intensity")
     plt.xlabel(r"$k\ (\mathrm{\AA}^{-1})$")
     plt.ylabel(r"$E_b\ \mathrm{(eV)}$")
@@ -74,4 +74,3 @@ for lam in [1, 2]:
     plt.tight_layout()
     plt.savefig(f"SpectralFunction_{lam}.png")
     plt.close()
-
