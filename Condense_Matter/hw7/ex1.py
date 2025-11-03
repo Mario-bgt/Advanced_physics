@@ -16,48 +16,48 @@ segs = [
     ("K", "Γ", lambda t: (0.75*(1-t),  0.75*(1-t), 0.0      )),   # K→Γ
 ]
 
-# assemble k-points and x-axis
-x = []
-kpts = []
-tick_pos = [0.0]   # start so labels match positions
-tick_lab = ["L"]
-s = 0.0
+t_arr = np.linspace(0, 1, 100)
 
-for (lab1, lab2, kfun) in segs:
-    ts = np.linspace(0, 1, 120, endpoint=False)
-    kseg = np.array([kfun(t) for t in ts])
-    # approximate arclength spacing for a nice x-axis
-    dk = np.linalg.norm(kseg[1] - kseg[0])
-    x.extend(s + np.arange(len(ts)) * dk)
-    s += len(ts) * dk
-    kpts.append(kseg)
-    tick_pos.append(s)   # end of this segment
-    tick_lab.append(lab2)
+k_path = []
+for p1, p2, func in segs:
+    for t in t_arr:
+        k_path.append(func(t))
 
-x = np.array(x)
-kpts = np.vstack(kpts)        # shape (N, 3)
-
-# ---- choose a few nearby bands (reciprocal translations) ----
 bands = [
-    (0,0,0),
-    (1,0,0), (0,1,0), (0,0,1),
-    (1,1,0), (1,0,1), (0,1,1),
-
+    (0, 0, 0),  # 1st band
+    (1, 0, 0),  # 2nd band
+    (1, 1, 0),  # 3rd band
+    (1, 1, 1),  # 4th band
+    (-1, 0, 0),  # 2nd band
+    (-1, -1, 0),  # 3rd band
+    (-1, -1, -1),  # 4th band
 ]
 
-# ---- E is USED here: evaluate along the whole path for each band ----
-for (nx, ny, nz) in bands:
-    Evals = [E(kx, ky, kz, nx, ny, nz) for (kx, ky, kz) in kpts]
-    plt.plot(x, Evals, lw=1, label=f"({nx},{ny},{nz})")
 
-# cosmetics
-for p in tick_pos[1:]:
-    plt.axvline(p, color='k', lw=0.5)
-plt.xticks(tick_pos, tick_lab)
-plt.ylabel("E (arb. units of (2π/a)^2)")
-plt.title("Folded free-electron bands along L–Γ–X–K–Γ (fcc BZ)")
-# make legfend outside plot
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left',
-              title="Band indices (nx,ny,nz)")
+E_path = {band: [] for band in bands}
+for kx, ky, kz in k_path:
+    for band in bands:
+        nx, ny, nz = band
+        E_path[band].append(E(kx, ky, kz, nx, ny, nz))
+E_path = {band: np.array(energies) for band, energies in E_path.items()}
+# ---- plot ----
+plt.figure(figsize=(8, 6))
+x_ticks = []
+x_labels = []
+x_pos = 0
+for p1, p2, func in segs:
+    x_ticks.append(x_pos)
+    x_labels.append(p1)
+    x_pos += len(t_arr)
+x_ticks.append(x_pos)
+x_labels.append(p2)
+plt.xticks(x_ticks, x_labels)
+for band, energies in E_path.items():
+    plt.plot(range(len(k_path)), energies, label=f"Band {band}")
+plt.xlabel("k-path")
+plt.ylabel("Energy (units of (2π/a)²)")
+plt.title("Free Electron Band Structure along High-Symmetry k-Path")
+plt.grid(True)
+plt.legend()
 plt.tight_layout()
 plt.show()
