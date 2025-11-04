@@ -45,6 +45,7 @@ def main(csv_path):
     plt.title(f"Specific heat fit (alpha ≈ {alpha:.5f})")
     plt.legend()
     plt.tight_layout()
+    plt.savefig("fig_2.png", dpi=300)
     plt.show()
 
 if __name__ == "__main__":
